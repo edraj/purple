@@ -1,7 +1,7 @@
 // create an abstract service for state
 
-import clone from "just-clone";
-import { BehaviorSubject, type Observable } from "rxjs";
+import clone from 'just-clone';
+import { BehaviorSubject, type Observable } from 'rxjs';
 export interface IStateItem {
   shortname: string;
 }

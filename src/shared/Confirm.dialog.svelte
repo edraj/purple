@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { IDialogData } from "$lib/dialog/service.svelte";
+  import type { IDialogData } from '$lib/dialog/service.svelte';
 
   const props: IDialogData<{ message: string }> = $props();
 </script>

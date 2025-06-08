@@ -1,8 +1,8 @@
-import httpClient from "$core/http.service";
-import { mapResponse } from "$src/core/response.model";
-import { AuthUser, type IAuthUser } from "./auth.model";
-import { AuthState } from "./auth.state";
-import { Profile } from "./profile.model";
+import httpClient from '$core/http.service';
+import { mapResponse } from '$src/core/response.model';
+import { AuthUser, type IAuthUser } from './auth.model';
+import { AuthState } from './auth.state';
+import { Profile } from './profile.model';
 
 export class AuthService {
   static async Login(username: string, password: string): Promise<IAuthUser> {
@@ -28,5 +28,9 @@ export class AuthService {
     // careful, this depends on already logged in user and saved in cross domain cookie
     const res = await httpClient.get_profile();
     return Profile.NewInstance(mapResponse(res));
+  }
+
+  static async Logout() {
+    return await httpClient.logout();
   }
 }

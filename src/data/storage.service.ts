@@ -1,6 +1,6 @@
-import { browser } from "$app/environment";
-import { Config } from "$src/config";
-import { Res } from "$utils/resources";
+import { browser } from '$app/environment';
+import { Config } from '$src/config';
+import { Res } from '$utils/resources';
 
 export class StorageService {
   private get ourStorage(): Storage {
@@ -25,18 +25,17 @@ export class StorageService {
   }
 
   private getKey(key: string, withLanguage = false): string {
-    return `${Config.Cache.Key}${
-      withLanguage ? "." + Res.language : ""
-    }.${key}`;
+    return `${Config.Cache.Key}${withLanguage ? '.' + Res.language : ''
+      }.${key}`;
   }
 
   private _setResetKey(): void {
     const _key = this.getKey(Config.Cache.ResetKey);
     const _reset: any = this.ourStorage.getItem(_key);
     // if it does not exist, it must have changed in config, remove everything
-    if (!_reset || _reset !== "true") {
+    if (!_reset || _reset !== 'true') {
       this.clear();
-      this.ourStorage.setItem(_key, "true");
+      this.ourStorage.setItem(_key, 'true');
     }
   }
 

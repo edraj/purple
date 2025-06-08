@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Observable } from "rxjs";
-  import { displayDate } from "../../../lib/transform/date";
-  import type { IResource } from "../../../services/resource.model";
-  import { rootSpaceList } from "../../../services/space.state.svelte";
-  import { translate } from "../../../utils/resources";
-  import { routeLink } from "../../../utils/route";
+  import type { Observable } from 'rxjs';
+  import { displayDate } from '../../../lib/transform/date';
+  import type { IResource } from '../../../services/resource.model';
+  import { rootSpaceList } from '../../../services/space.state.svelte';
+  import { translate } from '../../../utils/resources';
+  import { routeLink } from '../../../utils/route';
 
   const spaces: Observable<IResource[]> = rootSpaceList.stateList$;
 </script>
@@ -12,7 +12,7 @@
 <div class="page">
   <div class="container">
     <div class="spaced">
-      <button class="btn-rev">{translate("Create new", "CreateNew")}</button>
+      <button class="btn-rev">{translate('Create new', 'CreateNew')}</button>
     </div>
 
     {#if $spaces.length}
@@ -20,10 +20,7 @@
         {#each $spaces as space}
           <li>
             <div class="card">
-              <a
-                class="a"
-                href={routeLink(`/spaces/${space.shortname}/folder`)}
-              >
+              <a class="a" href={routeLink(`/spaces/${space.shortname}`)}>
                 <span class="weight-bold">{space.displayname}</span>
                 <div class="smaller light">
                   {space.shortname}

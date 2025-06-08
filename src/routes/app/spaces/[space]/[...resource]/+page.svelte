@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/state';
+  import { page } from '$app/state';
 
-  const all =  page.params;
+  const all = page.params;
   _attn(all, 'page params');
 </script>
 

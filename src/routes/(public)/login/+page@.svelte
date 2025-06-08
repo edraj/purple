@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import OlInput from "$lib/input/OlInput.svelte";
-  import { Toast } from "$lib/toast/toast.svelte";
-  import { AuthService } from "$src/auth/auth.service";
-  import { AuthState } from "$src/auth/auth.state";
-  import { Config } from "$src/config";
-  import { routeLink } from "$utils/route";
+  import { goto } from '$app/navigation';
+  import OlInput from '$lib/input/OlInput.svelte';
+  import { Toast } from '$lib/toast/toast.svelte';
+  import { AuthService } from '$src/auth/auth.service';
+  import { AuthState } from '$src/auth/auth.state';
+  import { Config } from '$src/config';
+  import { routeLink } from '$utils/route';
 
-  let username = $state("");
-  let password = $state("");
+  let username = $state('');
+  let password = $state('');
   let showPassword = $state(false);
 
   async function handleLogin(event: Event) {
@@ -16,7 +16,7 @@
 
     // these following lines can be automated
     event.preventDefault();
-    this.classList.add("was-validated");
+    this.classList.add('was-validated');
 
     if (!this.checkValidity()) {
       return;
@@ -27,7 +27,9 @@
         Toast.HandleUiError(e);
       })
       .then((_) => {
-        goto(routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true));
+        goto(
+          routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true),
+        );
       });
   }
 </script>
@@ -51,10 +53,10 @@
         </OlInput>
         <OlInput placeholder="Password" forLabel="password" error="required">
           {#snippet input({ placeholder, css })}
-            <div class={showPassword ? "show" : ""}>
+            <div class={showPassword ? 'show' : ''}>
               <input
                 class="w100 {css}"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 bind:value={password}
                 {placeholder}
                 required

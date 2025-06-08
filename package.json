@@ -15,7 +15,6 @@
   },
   "type": "module",
   "dependencies": {
-    "@edraj/tsdmart": "^2.3.0",
     "bits-ui": "^2.4.1",
     "rxjs": "^7.8.2"
   },

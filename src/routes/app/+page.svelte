@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AuthState } from "$src/auth/auth.state";
+  import { AuthState } from '$src/auth/auth.state';
   const user = AuthState.GetUser();
 </script>
 

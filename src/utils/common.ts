@@ -15,13 +15,13 @@ export const setCookie = (key: string, value: string, expires: number) => {
   cookieStr += 'path=/;';
 
   document.cookie = cookieStr;
-}
+};
 
 export const getCookie = (key: string) => {
 
   const keyValue = document.cookie.match('(^|;) ?' + encodeURIComponent(key) + '=([^;]*)(;|$)');
   return keyValue ? decodeURIComponent(keyValue[2]) : null;
-}
+};
 
 
 
@@ -29,7 +29,7 @@ export const generateShortName = (displayname: string) => {
   // replace all non-alphanumeric characters with underscore
 
   return displayname.replace(/[^\w\s]+|\s+/gi, '_').toLowerCase() + '_' + Date.now();
-}
+};
 
 
 export const GetParamsAsString = (urlParams: any, joinArray = false): string => {
@@ -117,9 +117,7 @@ export const makeDate = (dateString: string): Date | null => {
   // first toJSDate it
   if (dateString) {
     // do check to make sure it is valid date
-
     if (isNaN(Date.parse(dateString))) { return null; }
-
     return new Date(dateString);
   }
   return null;
@@ -128,55 +126,6 @@ export const makeDate = (dateString: string): Date | null => {
 export const toISODateString = (date: Date): string => {
   if (!date) { return ''; }
   return date.toISOString().split('T')[0];
-}
-
-
-
-/*
-function copied from https://github.com/angus-c/just/blob/master/packages/collection-clone/index.js
-Deep clones all properties except functions
-var arr = [1, 2, 3];
-var subObj = {aa: 1};
-var obj = {a: 3, b: 5, c: arr, d: subObj};
-var objClone = clone(obj);
-arr.push(4);
-subObj.bb = 2;
-obj; // {a: 3, b: 5, c: [1, 2, 3, 4], d: {aa: 1}}
-objClone; // {a: 3, b: 5, c: [1, 2, 3], d: {aa: 1, bb: 2}}
-*/
-const getRegExpFlags = (regExp: any) => {
-  if (typeof regExp.source.flags == 'string') {
-    return regExp.source.flags;
-  } else {
-    const flags = [];
-    regExp.global && flags.push('g');
-    regExp.ignoreCase && flags.push('i');
-    regExp.multiline && flags.push('m');
-    regExp.sticky && flags.push('y');
-    regExp.unicode && flags.push('u');
-    return flags.join('');
-  }
-};
-export const clone = (obj: any) => {
-  if (typeof obj == 'function') {
-    return obj;
-  }
-  const result: any = Array.isArray(obj) ? [] : {};
-  for (const key in obj) {
-    // include prototype properties
-    const value = obj[key];
-    const type = {}.toString.call(value).slice(8, -1);
-    if (type == 'Array' || type == 'Object') {
-      result[key] = clone(value);
-    } else if (type == 'Date') {
-      result[key] = new Date(value.getTime());
-    } else if (type == 'RegExp') {
-      result[key] = RegExp(value.source, getRegExpFlags(value));
-    } else {
-      result[key] = value;
-    }
-  }
-  return result;
 };
 
 

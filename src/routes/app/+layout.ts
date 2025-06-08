@@ -1,7 +1,7 @@
-import { goto } from "$app/navigation";
-import { AuthState } from "$src/auth/auth.state";
-import { Config } from "$src/config";
-import { routeLink } from "$utils/route";
+import { goto } from '$app/navigation';
+import { AuthState } from '$src/auth/auth.state';
+import { Config } from '$src/config';
+import { routeLink } from '$utils/route';
 
 export const load = async () => {
   // guard route
@@ -9,6 +9,5 @@ export const load = async () => {
     goto(routeLink(Config.Auth.loginRoute, true));
   }
 
-  return {
-  };
+  return {};
 };

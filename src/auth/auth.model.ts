@@ -1,4 +1,4 @@
-import { Profile, type IProfile } from "./profile.model";
+import { Profile, type IProfile } from './profile.model';
 
 export interface IAuthUser {
   accessToken?: string;
@@ -9,7 +9,7 @@ export interface IAuthUser {
 export class AuthUser {
   static NewInstance(res: any): IAuthUser {
     // decode res.access_token
-    const _res = JSON.parse(atob(res.access_token.split(".")[1]));
+    const _res = JSON.parse(atob(res.access_token.split('.')[1]));
     if (!_res) return null;
 
     return {

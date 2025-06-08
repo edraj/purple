@@ -1,5 +1,4 @@
 import { Config } from '../config';
-import { EnumResourceType } from "../services/resource.model";
 
 export interface IListItem {
   id: string;
@@ -10,20 +9,6 @@ export interface IList<T extends IListItem> {
   total: number; // attributes.total
 }
 
-
-export enum EnumQueryType {
-  AGGREGATION = 'aggregation',
-  SEARCH = 'search', // used
-  SUBPATH = 'subpath',
-  EVENTS = 'events',
-  HISTORY = 'history',
-  TAGS = 'tags',
-  SPACES = 'spaces', // used
-  COUNTERS = 'counters',
-  REPORTS = 'reports',
-  RANDOM = 'random',
-}
-
 export interface IListOptions {
   page?: number;
   keyword?: string;
@@ -32,10 +17,10 @@ export interface IListOptions {
   sort?: { by: string, order: string; }; // TODO:
   hasMore?: boolean;
 
-  type?: EnumQueryType;
+  type?: string;
   withPayload?: boolean;
   withAttachments?: boolean;
-  resourceType?: EnumResourceType;
+  resourceType?: string;
   space?: string;
   subpath?: string;
 
@@ -54,7 +39,7 @@ export class ListOptions {
     let content;
     let path = options.subpath;
 
-    if(options.resourceType && options.resourceType !== EnumResourceType.FOLDER) {
+    if (options.resourceType && options.resourceType !== EnumResourceType.FOLDER) {
       // content is the last element in subpath
       const _subpath = options.subpath.split('/');
       content = _subpath.slice(-1);

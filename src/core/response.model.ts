@@ -2,11 +2,12 @@ const mapRecord = (record: any) => {
   if (!record) return null;
   let body = record.attributes?.payload?.body;
   // if its text, dont expand
-  if (typeof body === "string") body = { body };
+  if (typeof body === 'string') body = { body };
 
   return {
     ...record,
     ...record.attributes,
+    ...record.attributes?.payload,
     ...body,
   };
 };
@@ -50,7 +51,6 @@ export const mapAttachment = (data: any): any => {
 
   // inside json[0] it has attrobutes.payload.body -> array of elements
   const root = data.attachments.json[0];
-
   return root.attributes.payload.body;
 };
 

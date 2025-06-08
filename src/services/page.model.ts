@@ -1,10 +1,10 @@
-import { Translation } from "$src/utils/translation.model";
+import { Translation } from '$src/utils/translation.model';
 
 export interface IPage {
   displayname?: string;
   shortname: string;
   description?: string;
-  body?:string;
+  body?: string;
 }
 
 export class Page {
@@ -12,7 +12,7 @@ export class Page {
     return {
       shortname: data.shortname,
       displayname: Translation.MapLanguage(data.displayname),
-      body: data.body
+      body: data.body,
     };
   }
 

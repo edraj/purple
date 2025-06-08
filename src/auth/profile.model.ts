@@ -1,9 +1,9 @@
-import { Translation } from "$src/utils/translation.model";
+import { Translation } from '$src/utils/translation.model';
 
 export enum EnumRole {
-  ADMIN = "super_admin",
-  USER = "logged_in",
-  DEFAULT = "world",
+  ADMIN = 'super_admin',
+  USER = 'logged_in',
+  DEFAULT = 'world',
 }
 
 export interface IProfile {

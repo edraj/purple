@@ -1,21 +1,22 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import Language from "$src/shared/Language.svelte";
-  import { routeLink } from "$utils/route";
-  import { AuthState } from "../../auth/auth.state.js";
-  import { Config } from "../../config.js";
-  import { translate } from "../../utils/resources.js";
+  import { goto } from '$app/navigation';
+  import Language from '$src/shared/Language.svelte';
+  import { routeLink } from '$utils/route';
+  import { AuthService } from '../../auth/auth.service.js';
+  import { AuthState } from '../../auth/auth.state.js';
+  import { Config } from '../../config.js';
+  import { translate } from '../../utils/resources.js';
 
-  _seqlog("public layout loaded");
+  _seqlog('public layout loaded');
 
   let { children, data } = $props();
   const pages = data.pages;
 
   const user = AuthState.GetUser();
 
-
-  const logout = (e) => {
+  const logout = async (e) => {
     e.preventDefault();
+    await AuthService.Logout();
     AuthState.Logout();
 
     goto(routeLink(Config.Auth.loginRoute, true));
@@ -28,7 +29,9 @@
       <li>
         <a href={routeLink('/', true)}>Home</a>
       </li>
-      <li><a href={routeLink('/spaces')}>{translate('Spaces', 'Spaces')}</a></li>
+      <li>
+        <a href={routeLink('/spaces')}>{translate('Spaces', 'Spaces')}</a>
+      </li>
       {#each pages as item}
         <li>
           <a href={routeLink(`/pages/${item.shortname}`, true)}>
@@ -37,22 +40,23 @@
         </li>
       {/each}
       <li class="lauto">
-        {#if user}
-
-          <a href={routeLink(`/profiles`)}>{ user.displayname }</a>
-        | <a class="smaller" onclick={logout}>({ translate('Logout','Logout')})</a>
+        {#if user?.shortname}
+          <a href={routeLink(`/profiles`)}>{user.displayname}</a>
+          |
+          <a class="smaller" onclick={logout}
+            >({translate('Logout', 'Logout')})</a
+          >
         {:else}
-          <a href={routeLink(Config.Auth.loginRoute)}>{ translate('Login','Login')}</a>
+          <a href={routeLink(Config.Auth.loginRoute, true)}
+            >{translate('Login', 'Login')}</a
+          >
         {/if}
-
       </li>
       <li>
-          <Language></Language>
+        <Language></Language>
       </li>
     </ul>
-
   </nav>
-
 </header>
 
 <div class="page">

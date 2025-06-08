@@ -1,11 +1,11 @@
 // user.ts
-import { browser } from "$app/environment";
-import { Config } from "$src/config";
-import { SiteStorage } from "$src/data/storage.service";
-import { Res } from "$utils/resources";
-import { get, writable } from "svelte/store";
-import type { IAuthUser } from "./auth.model";
-import type { IProfile } from "./profile.model";
+import { browser } from '$app/environment';
+import { Config } from '$src/config';
+import { SiteStorage } from '$src/data/storage.service';
+import { Res } from '$utils/resources';
+import { get, writable } from 'svelte/store';
+import type { IAuthUser } from './auth.model';
+import type { IProfile } from './profile.model';
 
 export class AuthState {
   // may be these should be shielded later
@@ -17,7 +17,7 @@ export class AuthState {
   }
   static set redirectUrl(value: string) {
     // remove language
-    SiteStorage.setItem(Config.Auth.redirectKey, value.replace(Res.Re, ""));
+    SiteStorage.setItem(Config.Auth.redirectKey, value.replace(Res.Re, ''));
   }
 
   static get currentState() {

@@ -1,19 +1,19 @@
-import { Config } from "$src/config";
-import { _global, toSentenceCase } from "./common";
+import { Config } from '$src/config';
+import { _global, toSentenceCase } from './common';
 
 export const res = (
   res: string,
   plural: boolean = false,
   count: number = 1,
-  tocase: string = "normal"
+  tocase: string = 'normal'
 ): string => {
-  let value = Res.Get(res, "");
+  let value = Res.Get(res, '');
 
   // format: normal or sentence case only
   if (plural) {
     value = Res.Plural(res, count);
   }
-  return tocase === "sentence" ? toSentenceCase(value) : value;
+  return tocase === 'sentence' ? toSentenceCase(value) : value;
 };
 export const translate = (
   original: string,
@@ -33,7 +33,7 @@ export const translate = (
 
 export class Res {
   private static get keys(): any {
-    return _global.cl?.resources.keys || { NoRes: "" };
+    return _global.cl?.resources.keys || { NoRes: '' };
   }
 
   public static get language(): string {
@@ -50,7 +50,7 @@ export class Res {
 
   public static get Re(): any {
     const langages = Config.Res.languages.map((l) => l.name);
-    return new RegExp(`^\/(${langages.join("|")})`, "gim");
+    return new RegExp(`^\/(${langages.join('|')})`, 'gim');
   }
 
   public static Get(key: string, fallback?: string): string {
@@ -87,7 +87,7 @@ export class Res {
       }
     }
     // replace and return;
-    return factor.replace("$0", count);
+    return factor.replace('$0', count);
   }
 
   public static Select(key: string, select: any, fallback?: string): string {

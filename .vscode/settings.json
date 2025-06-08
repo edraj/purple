@@ -1,5 +1,14 @@
 {
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
-  }
+  },
+  "typescript.preferences.quoteStyle": "single",
+  "prettier.quoteProps": "consistent",
+  "prettier.embeddedLanguageFormatting": "auto",
+  "editor.formatOnSaveMode": "file",
+  "editor.formatOnSave": true,
+  "prettier.bracketSameLine": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true
 }

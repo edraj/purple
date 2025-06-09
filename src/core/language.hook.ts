@@ -15,8 +15,8 @@ export const LanguageHook: Handle = async ({ event, resolve }) => {
   const result = await resolve(event, {
     transformPageChunk: ({ html }) => {
       // here, manipulate html based on language
-      const reLTR = /<!-- #LTR -->([\s\S]*?)<!-- #ENDLTR -->/gim;
-      const reRTL = /<!-- #RTL -->([\s\S]*?)<!-- #ENDRTL -->/gim;
+      const reLTR = /!#LTR([\s\S]*?)!#ENDLTR/gim;
+      const reRTL = /!#RTL([\s\S]*?)!#ENDRTL/gim;
       const reLang = /\$lang/gim;
       let contents = html;
       // TODO: move lang to a config file

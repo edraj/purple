@@ -7,31 +7,27 @@
   import ResourceNodes from './ResourceNodes.svelte';
 
   interface IProps {
-    nodes: IResourceNode[];
+    resource?: IResourceNode;
     space: string;
   }
-  let { nodes, space }: IProps = $props();
+  let { resource, space }: IProps = $props();
 
   const treeState = getContext('TreeState') as ResourceListState;
   const pathState = getContext('PathState') as PathState;
-  let children;
+
+  let nodes: Observable<IResourceNode[]> = treeState.GetResources(space, resource);
+
   const toggle = (resource: IResourceNode) => {
     // first reset path state so that it doesnt trigger a sycn
-    pathState.update({ source: 'toggle' });
-    const _newResource = treeState.Toggle(resource);
+    // pathState.update({ source: 'toggle' });
+    treeState.Toggle(resource);
     // now get children if expanded
-    if (_newResource.expanded) {
-      children = GetChildren(_newResource);
-    }
-  };
-  const GetChildren = (resource: IResourceNode): Observable<IResourceNode[]> => {
-    return treeState.GetResources(space, resource);
   };
 </script>
 
-{#if nodes?.length}
+{#if $nodes?.length}
   <ul class="alist lbreath breath">
-    {#each nodes as item}
+    {#each $nodes as item}
       <li>
         <div class="card">
           <div class="content">
@@ -39,7 +35,7 @@
           </div>
         </div>
         {#if item.expanded}
-          <ResourceNodes {space} nodes={$children}></ResourceNodes>
+          <ResourceNodes {space} resource={item}></ResourceNodes>
         {/if}
       </li>
     {/each}

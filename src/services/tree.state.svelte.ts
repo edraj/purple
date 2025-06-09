@@ -1,5 +1,5 @@
 import { EnumResourceType } from '@edraj/tsdmart/client';
-import { from, of, switchMap, type Observable } from 'rxjs';
+import { defer, map, switchMap, type Observable } from 'rxjs';
 import { ListStateService } from '../core/state.svelte';
 import type { IPath } from './path.state.svelte';
 import type { IResource } from './resource.model';
@@ -29,21 +29,23 @@ export class ResourceListState extends ListStateService<IResourceNode> {
       return this.GetChildren(_id);
     }
     // get from server and populate state
-    return from(ResourceService.GetResources({
+
+    return defer(() => ResourceService.GetResources({
       space: space,
       resourceType: EnumResourceType.folder,
-      subpath: resource?.subpath
+      subpath: resource?.subpath,
+      exactPath: true
     })).pipe(
       switchMap(d => {
         if (_current) _current.populated = true;
         return this.append(d.map(n => ({ ...n, parentId: _id, expanded: false, populated: false })));
       }),
-      switchMap(l => this.GetChildren(_id))
+      map(list => list.filter(f => f.parentId === _id))
     );
   }
 
   GetChildren(id?: string): Observable<IResourceNode[]> {
-    return of(this.currentList.filter(f => f.parentId === id));
+    return this.stateList$.pipe(map(list => list.filter(f => f.parentId === id)));
   }
 
   Sync(path: IPath) {

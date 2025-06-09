@@ -19,7 +19,7 @@ export class SpaceService {
       exactPath: true,
       sort: { by: 'resource_type', type: EnumSort.descending },
       subpath: '/',
-      keyword: '',
+      keyword: ''
     };
 
     const res = await httpClient.query(Param.MapQueryParams(options));
@@ -36,7 +36,7 @@ export class SpaceService {
       subpath: '/',
       keyword: '',
       withAttachments: true,
-      withPayload: true
+      withPayload: true,
     };
 
     const res = await httpClient.query(Param.MapQueryParams(options));

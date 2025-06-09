@@ -17,8 +17,8 @@
       <i class="liga cam rbreath" onclick={() => onToggle()}>{resource.expanded ? 'openfolder' : 'folder'}</i>
       <a class="cam" onclick={() => onSelect()}>{resource.displayname}</a>
 
-      <div class="small resource-full">
-        {resource.shortname} - {resource.contentType}
+      <div class="small">
+        <span class="label label-grey-light">{resource.shortname}</span>
         <div class="light">
           {resource.description}
         </div>

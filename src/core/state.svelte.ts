@@ -2,6 +2,7 @@
 
 import clone from 'just-clone';
 import { BehaviorSubject, type Observable } from 'rxjs';
+import { debug } from '../utils/rxjs.operators';
 export interface IStateItem {
   shortname: string;
 }
@@ -9,6 +10,18 @@ export interface IStateItem {
 export class ListStateService<T extends IStateItem> {
   protected stateList: BehaviorSubject<T[]> = new BehaviorSubject([]);
   stateList$: Observable<T[]> = this.stateList.asObservable();
+
+  constructor(level?: string) {
+
+    if (level === 'DEBUG') {
+      // default dont debug
+      this.stateList$ = this.stateList$.pipe(
+        debug(this.constructor.name)
+      );
+
+    }
+
+  }
 
   get currentList(): T[] {
     return this.stateList.getValue();
@@ -33,6 +46,7 @@ export class ListStateService<T extends IStateItem> {
   prepend(item: T): void {
     this.stateList.next([item, ...this.currentList]);
   }
+
 
   edit(item: T): void {
     const currentList = [...this.currentList];

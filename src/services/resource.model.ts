@@ -36,27 +36,26 @@ export class Resource {
 
     if (!resource) return null;
 
-    const _subpath = (`${resource.subpath}/${resource.shortname}`).replace('//', '');
+    // return subpath is not a true representation of the path
+    const _subpath = (`${resource.subpath}/${resource.shortname}`).replace('//', '/');
     return {
-      id: resource.uuid,
-      shortname: resource.shortname,
-      type: resource.resource_type,
-      schema: resource.schema_shortname,
+      contentType: resource.content_type || null,
       created: makeDate(resource.created_at),
-      updated: makeDate(resource.updated_at),
-      isActive: resource.is_active,
-      tags: resource.tags,
-      displayname: Translation.MapLanguage(resource.displayname) || resource.shortname, // calculate per language
       description: Translation.MapLanguage(resource.description),
-      displaynameInput: resource.displayname,
       descriptionInput: resource.description,
-      // body: resource?.body,
-      contentType: resource.content_type,
-      subpath: _subpath,
+      displayname: Translation.MapLanguage(resource.displayname) || resource.shortname, // calculate per language
+      displaynameInput: resource.displayname,
+      id: resource.uuid,
+      isActive: resource.is_active || false,
+      isHidden: resource.hide_space || false,
+      // path: `${resource.space_name}/${resource.resource_type}/${_subpath}`,
+      schema: resource.schema_shortname,
+      shortname: resource.shortname,
       space: resource.space_name,
-      // space: options?.space || resource.space_name,
-      path: `${options?.space}/${resource.resource_type}/${_subpath}`,
-      isHidden: resource.hide_space
+      subpath: _subpath,
+      tags: resource.tags,
+      type: resource.resource_type,
+      updated: makeDate(resource.updated_at)
     };
   }
   static NewInstances(resources: any[]): IResource[] {

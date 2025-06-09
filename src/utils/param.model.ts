@@ -36,15 +36,15 @@ export class Param {
     // query folder content, unless type is not folder, change the path
     // the last part of the path is the shortname of the content
 
-    let content;
-    let path = options.subpath;
+    // let content;
+    // let path = options.subpath;
 
-    if (options.resourceType && options.resourceType !== EnumResourceType.folder) {
-      // content is the last element in subpath
-      const _subpath = options.subpath.split('/');
-      content = _subpath.slice(-1);
-      path = _subpath.slice(0, -1).join('/');
-    }
+    // if (options.resourceType && options.resourceType !== EnumResourceType.folder) {
+    //   // content is the last element in subpath
+    //   const _subpath = options.subpath.split('/');
+    //   content = _subpath.slice(-1);
+    //   path = _subpath.slice(0, -1).join('/');
+    // }
 
     // resourceType does not exist, map it in filter_Types
     let forTypes = [EnumResourceType.content, EnumResourceType.folder];
@@ -55,13 +55,13 @@ export class Param {
     return {
       type: options.type || EnumQueryType.search,
       space_name: options.space || Config.API.rootSpace,
-      subpath: path || '/',
-      filter_shortnames: content || null,
+      subpath: options.subpath || '/',
+      // filter_shortnames: content || null,
       search: options.keyword || '',
       limit: options.size || 100,
       offset: options.page || 0,
       exact_subpath: options.exactPath || false, // almost always true
-      sort_type: options.sort?.type || EnumSort.descending,
+      sort_type: options.sort?.type || EnumSort.ascending,
       sort_by: options.sort?.by || 'created_at',
       retrieve_json_payload: options.withPayload || false,
       retrieve_attachments: options.withAttachments || false,

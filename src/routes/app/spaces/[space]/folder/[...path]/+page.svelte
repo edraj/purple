@@ -11,7 +11,6 @@
   });
 
   const space = $derived.by(() => {
-    _attn(data.pageResources.currentList, 'whats in here');
     return page.params.space;
   });
   const path = $derived(page.params.path);

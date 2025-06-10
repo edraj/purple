@@ -1,5 +1,4 @@
 import { ResourceService } from '$src/services/resource.service.js';
-import { EnumResourceType } from '@edraj/tsdmart/client/index.js';
 import { PageResourceListState } from '../../../../../../services/resource.state.svelte.js';
 
 export const load = async ({ params }) => {
@@ -11,7 +10,6 @@ export const load = async ({ params }) => {
     subpath: params.path,
     size: 100,
     exactPath: true,
-    resourceType: EnumResourceType.folder
   });
 
   pageResources.SetList(resources);

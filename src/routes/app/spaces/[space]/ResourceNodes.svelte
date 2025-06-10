@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
   import { tap, type Observable } from 'rxjs';
   import { getContext } from 'svelte';
   import type { PathState } from '../../../../services/path.state.svelte';
   import type { IResourceNode, ResourceListState } from '../../../../services/tree.state.svelte';
+  import { routeLink } from '../../../../utils/route';
   import ResourceCard from './ResourceCard.svelte';
   import ResourceNodes from './ResourceNodes.svelte';
 
@@ -27,9 +29,7 @@
   };
 
   const select = (resource: IResourceNode) => {
-    // navigate?
-    _attn(resource, 'select');
-    _attn(pathState.currentItem, 'path');
+    goto(routeLink(`/spaces/${resource.path}`));
   };
 </script>
 

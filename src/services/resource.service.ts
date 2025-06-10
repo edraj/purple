@@ -1,5 +1,5 @@
 import httpClient from '../core/http.service';
-import { mapRecords, mapResource } from '../core/response.model';
+import { mapRecords, mapResponse } from '../core/response.model';
 import { Param, type IParam } from '../utils/param.model';
 import { Resource, type IResource } from './resource.model';
 
@@ -18,15 +18,15 @@ export class ResourceService {
     return Resource.NewInstances(mapRecords(res)?.records);
   }
 
-  static async GetEntry(options: IParam = {}): Promise<IResource> {
+  static async GetResource(options: IParam = {}): Promise<IResource> {
 
-    const params = Param.MapEntryParams(options);
+    const params = Param.MapQueryParams({ ...options, size: 1 });
 
-    const res = await httpClient.retrieve_entry({
+    const res = await httpClient.query({
       ...params
     });
 
-    return Resource.NewInstance(mapResource(res));
+    return Resource.NewInstance(mapResponse(res));
   }
 
 }

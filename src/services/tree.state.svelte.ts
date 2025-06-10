@@ -15,7 +15,7 @@ export interface IResourceNode extends IResource {
 export class ResourceListState extends ListStateService<IResourceNode> {
   constructor() {
 
-    super();
+    super('DEBUG');
     super.SetList([]);
   }
 
@@ -48,6 +48,7 @@ export class ResourceListState extends ListStateService<IResourceNode> {
     return this.stateList$.pipe(map(list => list.filter(f => f.parentId === id)));
   }
 
+  // dont do this,
   Sync(path: IPath) {
     if (path?.path && path?.source === 'route') {
       // break it up and find and expend

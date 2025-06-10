@@ -4,9 +4,8 @@
   import { setContext } from 'svelte';
   import { rootSpaceList } from '../../../../services/space.state.svelte';
   import { translate } from '../../../../utils/resources';
-  import { routeLink } from '../../../../utils/route';
   import SpacePath from './path.svelte';
-  import ResourceList from './ResourceList.svelte';
+  import ResourceNodes from './ResourceNodes.svelte';
 
   const { data, children }: any = $props();
   // remember to access current page ata: page.data
@@ -32,41 +31,13 @@
             {displayDate($space.updated)}
           </div>
 
-          <ResourceList space={$space.space}></ResourceList>
+          <ResourceNodes space={$space.space}></ResourceNodes>
         {/if}
-
-        <a href={routeLink('/spaces/spacename/resourcename/subpath/shomething')}>Test deep link</a>
       </div>
       <div class="c-9">
         <SpacePath space="$space.space"></SpacePath>
 
         {@render children()}
-        <!-- {#if resources?.length}
-          <table class="bordered spacedout">
-            <thead>
-              <tr>
-                <th>shortname</th>
-                <th>Resource type</th>
-                <th>Schema</th>
-                <th>Created</th>
-                <th>Updated</th>
-              </tr>
-            </thead>
-            <tbody>
-              {#each resources as resource}
-                <tr>
-                  <td>
-                    <a href={routeLink(`/spaces/${$space?.shortname}/${resource.shortname}`)}>{resource.shortname}</a>
-                  </td>
-                  <td>{resource.type}</td>
-                  <td>{resource.schema}</td>
-                  <td>{resource.created}</td>
-                  <td>{resource.updated}</td>
-                </tr>
-              {/each}
-            </tbody>
-          </table>
-        {/if} -->
       </div>
     </div>
   </div>

@@ -37,7 +37,7 @@ export class Resource {
     if (!resource) return null;
 
     // return subpath is not a true representation of the path
-    const _subpath = (`${resource.subpath}/${resource.shortname}`).replace('//', '/');
+    const _subpath = (`/${resource.subpath}/${resource.shortname}`).replace(/\/+/gi, '/');
     return {
       contentType: resource.content_type || null,
       created: makeDate(resource.created_at),
@@ -48,7 +48,7 @@ export class Resource {
       id: resource.uuid,
       isActive: resource.is_active || false,
       isHidden: resource.hide_space || false,
-      // path: `${resource.space_name}/${resource.resource_type}/${_subpath}`,
+      path: `${resource.space_name}/${resource.resource_type}${_subpath}`,
       schema: resource.schema_shortname,
       shortname: resource.shortname,
       space: resource.space_name,

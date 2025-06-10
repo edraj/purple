@@ -3,8 +3,8 @@
 
   interface IProps {
     resource: IResourceNode;
-    onToggle?: () => void;
-    onSelect?: () => void;
+    onToggle: () => void;
+    onSelect: () => void;
     onDelete?: () => void; // no, should keep away from this one
   }
 

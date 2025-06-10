@@ -6,6 +6,7 @@
     space: string;
   }
   let { space }: IProps = $props();
+
   const pathState = getContext('PathState') as PathState;
   const path = pathState.stateItem$;
 </script>

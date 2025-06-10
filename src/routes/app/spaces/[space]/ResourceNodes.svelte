@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type Observable } from 'rxjs';
+  import { tap, type Observable } from 'rxjs';
   import { getContext } from 'svelte';
   import type { PathState } from '../../../../services/path.state.svelte';
   import type { IResourceNode, ResourceListState } from '../../../../services/tree.state.svelte';
@@ -15,13 +15,21 @@
   const treeState = getContext('TreeState') as ResourceListState;
   const pathState = getContext('PathState') as PathState;
 
-  let nodes: Observable<IResourceNode[]> = treeState.GetResources(space, resource);
+  let nodes: Observable<IResourceNode[]> = treeState
+    .GetResources(space, resource)
+    .pipe(tap((_) => treeState.Sync(pathState.currentItem)));
 
   const toggle = (resource: IResourceNode) => {
     // first reset path state so that it doesnt trigger a sycn
-    // pathState.update({ source: 'toggle' });
+    pathState.update({ source: 'toggle' });
     treeState.Toggle(resource);
     // now get children if expanded
+  };
+
+  const select = (resource: IResourceNode) => {
+    // navigate?
+    _attn(resource, 'select');
+    _attn(pathState.currentItem, 'path');
   };
 </script>
 
@@ -31,7 +39,7 @@
       <li>
         <div class="card">
           <div class="content">
-            <ResourceCard resource={item} onToggle={() => toggle(item)}></ResourceCard>
+            <ResourceCard resource={item} onToggle={() => toggle(item)} onSelect={() => select(item)}></ResourceCard>
           </div>
         </div>
         {#if item.expanded}

@@ -1,4 +1,4 @@
-import { EnumQueryType, EnumResourceType, EnumSort, type IEntryQuery, type IQueryRequest } from '@edraj/tsdmart/client';
+import { EnumQueryType, EnumResourceType, EnumSort, type IEntryQuery, type IQueryRequest } from '$src/tsdmart/client';
 import { Config } from '../config';
 
 export interface IParam {

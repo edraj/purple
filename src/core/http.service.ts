@@ -1,5 +1,5 @@
 import { Config } from '$src/config';
-import { DmartClient } from '@edraj/tsdmart/client';
+import { DmartClient } from '$src/tsdmart/client';
 import { HttpInterctor } from './http.interceptors';
 
 const httpClient = new DmartClient({

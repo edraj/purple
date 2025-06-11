@@ -7,13 +7,9 @@
   import { routeLink } from '../../../../utils/route';
 
   const { space } = page.params;
-  _attn(page.params);
 
-  let { data } = $props();
-  _attn(data);
-
-  const s = getContext('TreeState') as ResourceListState;
-  const nodes = s.stateList$.pipe(map((n) => n.filter((f) => f.parentId === space)));
+  const treeState = getContext('TreeState') as ResourceListState;
+  const nodes = treeState.stateList$.pipe(map((n) => n.filter((f) => f.parentId === space)));
 
   // get all list from sevice again
   const resources = defer(() =>

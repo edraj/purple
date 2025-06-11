@@ -1,4 +1,3 @@
-import type { ClientError } from '@edraj/tsdmart';
 
 export interface IUiError {
   code: number; // dmart error code

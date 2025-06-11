@@ -1,4 +1,4 @@
-import { type ClientError } from '@edraj/tsdmart';
+import { type ClientError } from '$src/tsdmart/client';
 import { UiError } from './error.model';
 
 export const HttpInterctor = (dmartClient) => {

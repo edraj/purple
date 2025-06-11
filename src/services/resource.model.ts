@@ -1,4 +1,4 @@
-import type { EnumContentType, EnumResourceType } from '@edraj/tsdmart/client';
+import type { EnumContentType, EnumResourceType } from '$src/tsdmart/client';
 import { makeDate } from '../utils/common';
 import { Translation, type ITranslation } from "../utils/translation.model";
 

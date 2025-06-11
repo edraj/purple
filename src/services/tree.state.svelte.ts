@@ -1,4 +1,4 @@
-import { EnumResourceType } from '@edraj/tsdmart/client';
+import { EnumResourceType } from '$src/tsdmart/client';
 import { defer, map, switchMap, type Observable } from 'rxjs';
 import { ListStateService } from '../core/state.svelte';
 import type { IPath } from './path.state.svelte';
@@ -48,13 +48,10 @@ export class ResourceListState extends ListStateService<IResourceNode> {
     return this.stateList$.pipe(map(list => list.filter(f => f.parentId === id)));
   }
 
-  // dont do this,
   Sync(path: IPath) {
     if (path?.path && path?.source === 'route') {
-      // break it up and find and expend
       // if destroying, dont do this
       const parts = path.path.split('/');
-      // they are all folders
       this.currentList.filter(r => r.type === EnumResourceType.folder).forEach(r => {
         if (parts.includes(r.shortname)) {
           r.expanded = true;

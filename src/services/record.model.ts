@@ -1,12 +1,12 @@
 import { Config } from '$src/config';
-import { Translation } from '$src/utils/translation.model';
-import { makeDate, toISODateString } from '$utils/common';
 import {
   EnumContentType,
   EnumResourceType,
   type IAttributes,
   type IRecord,
-} from '@edraj/tsdmart/client';
+} from '$src/tsdmart/client';
+import { Translation } from '$src/utils/translation.model';
+import { makeDate, toISODateString } from '$utils/common';
 
 export interface IDmartRecord {
   displayname?: string;

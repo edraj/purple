@@ -7,12 +7,17 @@
   import SpacePath from './path.svelte';
   import ResourceNodes from './ResourceNodes.svelte';
 
-  const { data, children }: any = $props();
-  // remember to access current page ata: page.data
+  const { data, children } = $props();
 
   const space = rootSpaceList.GetSpace(page.params.space);
   setContext('PathState', data.pathState);
   setContext('TreeState', data.resourceListState);
+
+  data.pathState.SetState({ path: page.url.pathname });
+
+  $effect(() => {
+    data.pathState.update({ path: page.url.pathname, source: 'route' });
+  });
 </script>
 
 <div class="page">

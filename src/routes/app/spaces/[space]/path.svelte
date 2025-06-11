@@ -13,6 +13,6 @@
 
 {#if $path}
   <div class="small spaced">
-    {$path.path}
+    {$path.path} - {$path.source} - {space}
   </div>
 {/if}

@@ -1,19 +1,14 @@
 <script lang="ts">
-  import { page } from '$app/state';
-  import { EnumResourceType } from '@edraj/tsdmart/client';
   import { type Observable } from 'rxjs';
   import type { IResource } from '../../../../../../services/resource.model';
   import { routeLink } from '../../../../../../utils/route';
+  import { EnumResourceType } from '/src/tsdmart/client';
 
   const { data } = $props();
   let resources: Observable<IResource[]> = $derived.by(() => {
     return data.pageResources.stateList$;
   });
 
-  const space = $derived.by(() => {
-    return page.params.space;
-  });
-  const path = $derived(page.params.path);
   const addSomething = () => {
     data.pageResources.add({
       shortname: 'ayyash',
@@ -24,7 +19,6 @@
   };
 </script>
 
-here is a folder {space}/folder/{path}
 <div class="spaced"></div>
 <button class="btn-rev" onclick={addSomething}>add something</button>
 

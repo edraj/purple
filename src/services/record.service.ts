@@ -1,7 +1,7 @@
 import httpClient from '$core/http.service';
 import { Config } from '$src/config';
 import { mapRecords } from '$src/core/response.model';
-import { EnumQueryType, EnumRequestType } from '@edraj/tsdmart/client';
+import { EnumQueryType, EnumRequestType } from '$src/tsdmart/client';
 import { DmartRecord, type IDmartRecord } from './record.model';
 
 export class RecordService {

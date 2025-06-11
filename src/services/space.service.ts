@@ -1,4 +1,4 @@
-import { EnumQueryType, EnumSort } from '@edraj/tsdmart/client';
+import { EnumQueryType, EnumSort } from '$src/tsdmart/client';
 import { Config } from "../config";
 import httpClient from "../core/http.service";
 import { mapRecords, mapResponse } from "../core/response.model";

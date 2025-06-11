@@ -66,6 +66,16 @@ export class StateService<T> {
   protected stateItem: BehaviorSubject<T | null> = new BehaviorSubject(null);
   stateItem$: Observable<T | null> = this.stateItem.asObservable();
 
+  constructor(level?: string) {
+
+    if (level === 'DEBUG') {
+      this.stateItem$ = this.stateItem$.pipe(
+        debug(this.constructor.name)
+      );
+
+    }
+
+  }
   get currentItem(): T | null {
     return this.stateItem.getValue();
   }

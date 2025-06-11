@@ -17,6 +17,7 @@ export class SpaceListState extends ListStateService<IResource> {
       map((list) => list.find((item) => item.shortname === space))
     );
   }
+
 }
 
 export const rootSpaceList = new SpaceListState();

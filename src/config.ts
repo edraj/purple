@@ -32,7 +32,7 @@ export const Config = {
   },
   API: {
     apiRoot: import.meta.env.VITE_DMART_URL, // FIXME: move to environment
-    rootPath: '__root__',
+    // rootPath: '__root__',
     rootSpace: 'management',
     defaultSpace: 'maqola',
     contentSpace: 'Public',

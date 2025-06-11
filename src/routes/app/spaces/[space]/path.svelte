@@ -2,17 +2,13 @@
   import { getContext } from 'svelte';
   import type { PathState } from '../../../../services/path.state.svelte';
 
-  interface IProps {
-    space: string;
-  }
-  let { space }: IProps = $props();
-
   const pathState = getContext('PathState') as PathState;
   const path = pathState.stateItem$;
 </script>
 
 {#if $path}
   <div class="small spaced">
-    {$path.path} - {$path.source} - {space}
+    <strong>{$path.params?.space}</strong>
+    {$path.params?.path}
   </div>
 {/if}

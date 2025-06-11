@@ -1,4 +1,4 @@
-import type { EnumContentType, EnumResourceType } from '$src/tsdmart/client';
+import { EnumResourceType, type EnumContentType, type IRecordWithAttachment } from '$src/tsdmart/client';
 import { makeDate } from '../utils/common';
 import { Translation, type ITranslation } from "../utils/translation.model";
 
@@ -63,4 +63,19 @@ export class Resource {
     return resources.map(n => Resource.NewInstance(n)).filter(n => !n.isHidden);
   }
 
+
+  static PrepPost(resource: Partial<IResource>): IRecordWithAttachment {
+    return {
+      resource_type: EnumResourceType.space,
+      shortname: resource.shortname,
+      subpath: resource.subpath || '/',
+      attributes: {
+        is_active: true,
+        displayname: resource.displaynameInput, // TODO: proper mapping
+        description: resource.descriptionInput,
+        // ...payload // check if this can be empty
+      }
+    };
+
+  }
 }

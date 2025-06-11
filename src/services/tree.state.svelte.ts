@@ -15,7 +15,7 @@ export interface IResourceNode extends IResource {
 export class ResourceListState extends ListStateService<IResourceNode> {
   constructor() {
 
-    super('DEBUG');
+    super();
     super.SetList([]);
   }
 
@@ -50,7 +50,7 @@ export class ResourceListState extends ListStateService<IResourceNode> {
 
   Sync(path: IPath) {
     if (path?.path && path?.source === 'route') {
-      // if destroying, dont do this
+      // if destroying, dont do this, or use path.params
       const parts = path.path.split('/');
       this.currentList.filter(r => r.type === EnumResourceType.folder).forEach(r => {
         if (parts.includes(r.shortname)) {

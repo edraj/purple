@@ -1,4 +1,4 @@
-import { EnumQueryType, EnumSort } from '$src/tsdmart/client';
+import { EnumQueryType, EnumRequestType, EnumSort } from '$src/tsdmart/client';
 import { Config } from "../config";
 import httpClient from "../core/http.service";
 import { mapRecords, mapResponse } from "../core/response.model";
@@ -45,26 +45,18 @@ export class SpaceService {
   }
 
 
-  // static async UpdateSpace(space: IResource): Promise<void> {
-  //   const req: any = {
-  //     space_name: Config.API.defaultSpace,
-  //     request_type: RequestType.update,
-  //     records: [Resource.PrepPost(space)],
-  //   };
-  //   await httpClient.request(req);
-  //   return null;
-  // }
+  static async CreateSpace(space: Partial<IResource>): Promise<IResource> {
+    const res = await httpClient.space({
+      // space_name: Config.API.defaultSpace,
+      space_name: space.shortname,
+      request_type: EnumRequestType.create,
+      records: [Resource.PrepPost(space)]
+    });
 
-  // static async DeleteSpace(space: IResource): Promise<void> {
-  //   const req: any = {
-  //     space_name: Config.API.defaultSpace,
-  //     request_type: RequestType.delete,
-  //     records: [Resource.PrepPost(space)],
-  //   };
+    return Resource.NewInstance(mapResponse(res));
 
-  //   await httpClient.request(req);
-  //   return null;
-  // }
+  }
+
 
 
 }

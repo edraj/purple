@@ -16,15 +16,15 @@
   data.pathState.SetState({ path: page.url.pathname });
 
   $effect(() => {
-    data.pathState.update({ path: page.url.pathname, source: 'route' });
+    data.pathState.update({ path: page.url.pathname, params: page.params, source: 'route' });
   });
 </script>
 
 <div class="page">
   <div class="container">
-    <div class="row">
-      <div class="c-3">
-        {#if $space}
+    {#if $space}
+      <div class="row">
+        <div class="c-3">
           <h3 class="f3">{$space.displayname}</h3>
           <div class="spaced">
             {$space.description}
@@ -37,13 +37,13 @@
           </div>
 
           <ResourceNodes space={$space.space}></ResourceNodes>
-        {/if}
-      </div>
-      <div class="c-9">
-        <SpacePath space="$space.space"></SpacePath>
+        </div>
+        <div class="c-9">
+          <SpacePath></SpacePath>
 
-        {@render children()}
+          {@render children()}
+        </div>
       </div>
-    </div>
+    {/if}
   </div>
 </div>

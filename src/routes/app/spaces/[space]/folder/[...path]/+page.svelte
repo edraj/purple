@@ -1,8 +1,8 @@
 <script lang="ts">
+  import { EnumResourceType } from '$src/tsdmart/client';
   import { type Observable } from 'rxjs';
   import type { IResource } from '../../../../../../services/resource.model';
   import { routeLink } from '../../../../../../utils/route';
-  import { EnumResourceType } from '/src/tsdmart/client';
 
   const { data } = $props();
   let resources: Observable<IResource[]> = $derived.by(() => {
@@ -19,8 +19,9 @@
   };
 </script>
 
-<div class="spaced"></div>
-<button class="btn-rev" onclick={addSomething}>add something</button>
+<div class="spaced">
+  <button class="btn-rev btn-small" onclick={addSomething}>add something</button>
+</div>
 
 {#if $resources?.length}
   <h4>{$resources.length} resources</h4>

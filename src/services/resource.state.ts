@@ -1,4 +1,4 @@
-import { ListStateService, StateService } from '../core/state.svelte';
+import { ListStateService, StateService } from '../core/state.abstract';
 import type { IResource } from './resource.model';
 
 // user per page

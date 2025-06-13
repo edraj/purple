@@ -1,5 +1,5 @@
 import { ResourceService } from '$src/services/resource.service.js';
-import { PageResourceListState } from '../../../../../../services/resource.state.svelte.js';
+import { PageResourceListState } from '../../../../../../services/resource.state.js';
 
 export const load = async ({ params }) => {
   // get resources of space and the path after decifering it

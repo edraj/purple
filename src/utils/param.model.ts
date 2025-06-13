@@ -1,5 +1,7 @@
-import { EnumQueryType, EnumResourceType, EnumSort, type IEntryQuery, type IQueryRequest } from '$src/tsdmart/client';
 import { Config } from '../config';
+import { cleanPath } from './common';
+import type { IEntryQuery } from './dmart/entry.model';
+import { EnumQueryType, EnumRequestType, EnumResourceType, EnumSort, type IQueryRequest } from './dmart/query.model';
 
 export interface IParam {
   total?: number;
@@ -28,6 +30,16 @@ export interface IParam {
 };
 
 
+export interface IRequestParam {
+  space?: string;
+  type?: EnumRequestType;
+  schema?: string;
+  subpath?: string;
+  workflow?: string;
+  records?: any[];
+};
+
+
 export class Param {
 
 
@@ -38,6 +50,7 @@ export class Param {
 
     let search = '';
     let path = options.subpath;
+    let shortnames = options.shortname ? [options.shortname] : null;
 
     if (options.resourceType && options.resourceType !== EnumResourceType.folder) {
       // content is the last element in subpath
@@ -45,6 +58,8 @@ export class Param {
       search = _subpath.slice(-1)[0];
       path = _subpath.slice(0, -1).join('/');
     }
+
+    // @shortname:metafile keyword with resourceType: schema and subpath: /schema
 
     // resourceType does not exist, map it in filter_Types
     let forTypes = [EnumResourceType.content, EnumResourceType.folder];
@@ -55,8 +70,8 @@ export class Param {
     return {
       type: options.type || EnumQueryType.search,
       space_name: options.space || Config.API.rootSpace,
-      subpath: path || '/',
-      // filter_shortnames: content || null,
+      subpath: cleanPath(path) || '/',
+      filter_shortnames: shortnames,
       search: options.keyword || search,
       limit: options.size || 100,
       offset: options.page || 0,
@@ -67,6 +82,7 @@ export class Param {
       retrieve_attachments: options.withAttachments || false,
       validate_schema: true,
       filter_types: forTypes,
+      filter_schema_names: options.forSchemas || []
     };
 
   }
@@ -80,6 +96,17 @@ export class Param {
       space_name: options.space,
       subpath: options.subpath,
       shortname: options.shortname
+    };
+  }
+
+  static MapRequest(options: IRequestParam): any {
+    return {
+      space_name: options.space || Config.API.defaultSpace,
+      request_type: options.type || EnumRequestType.create,
+      schema_name: options.schema,
+      subpath: options.subpath,
+      workflow_name: options.workflow,
+      records: options.records || null
     };
   }
 }

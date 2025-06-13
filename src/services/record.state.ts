@@ -1,4 +1,4 @@
-import { ListStateService } from '$core/state.svelte';
+import { ListStateService } from '$core/state.abstract';
 import type { IDmartRecord } from './record.model';
 
 export class RecordListState extends ListStateService<IDmartRecord> { }

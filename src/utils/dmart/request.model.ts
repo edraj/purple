@@ -4,16 +4,16 @@ import type { IRecordWithAttachment } from './record.model';
 export interface IRequest {
   space_name: string;
   request_type: EnumRequestType;
-  records: IRecordWithAttachment[];
+  records?: IRecordWithAttachment[];
+
+  schema_shortname?: string,
+  subpath?: string,
+  resource_type?: EnumResourceType,
+  workflow_shortname?: string,
+  record?: any;
 };
 
 
 // this is a flattened out request for submit function
-export interface ISubmitRequest {
-  space_name: string,
-  schema_shortname: string,
-  subpath: string,
-  resource_type?: EnumResourceType,
-  workflow_shortname?: string,
-  record: any;
-}
+// export interface ISubmitRequest {
+// }

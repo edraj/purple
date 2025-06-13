@@ -7,9 +7,9 @@ const config = {
   kit: {
     alias: {
       "shut": process.cwd() + "/node_modules/shut/src",
-      "$src": process.cwd() + ("/src"),
       "$utils": process.cwd() + ("/src/utils"),
-      "$core": process.cwd() + ("/src/core")
+      "$core": process.cwd() + ("/src/core"),
+      "$src": process.cwd() + ("/src"),
     },
     adapter: adapter({
       pages: "host/build",

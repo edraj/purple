@@ -36,14 +36,11 @@ export const mapResource = (data: any): any => {
   };
 };
 
-export const mapRecords = (data: any): any => {
+export const mapRecords = (data: any): any[] => {
   const l = data.records?.length;
   if (!l) return null;
 
-  return {
-    status: data.status,
-    records: data.records.map(mapRecord),
-  };
+  return data.records.map(mapRecord);
 };
 
 export const mapAttachment = (data: any): any => {

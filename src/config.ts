@@ -12,8 +12,10 @@ export const Config = {
     lockTimeout: 100,
   },
   Res: {
+    // hard coded
     languages: [
       { name: 'en', display: 'English' },
+      { name: 'ku', display: 'Kurdi' },
       { name: 'ar', display: 'عربي', isRtl: true }
     ],
     defaultLanguage: 'en',
@@ -31,14 +33,55 @@ export const Config = {
     ResetKey: '20250101',
   },
   API: {
-    apiRoot: import.meta.env.VITE_DMART_URL, // FIXME: move to environment
-    // rootPath: '__root__',
+    apiRoot: import.meta.env.VITE_DMART_URL,
+    queryTimeout: 3000,
     rootSpace: 'management',
+    autoShortname: 'auto',
     defaultSpace: 'maqola',
     contentSpace: 'Public',
-
+    data: {
+      metafile: '/schema/metafile',
+    },
     records: {
       list: '/records',
+    },
+    users: {
+      list: '/users'
+    },
+    auth: {
+      login: '/user/login',
+      logout: '/user/logout',
+      profile: '/user/profile'
+    },
+    resource: {
+      query: '/managed/query',
+      publicQuery: '/public/query',
+      csv: '/managed/csv',
+      space: '/managed/space', // special for creeating space
+      request: '/:scope/request',
+      // path is optional
+      submit: '/public/submit/:space/:path:schema/:subpath',
+    },
+    entry: {
+      existing: '/user/check-existing?:options',
+      details: '/:scope/entry/:resource/:space/:subpath/:shortname?:options',
+    },
+    payload: {
+      file: '/:scope/resource_with_payload',
+      files: '/:scope/resource_with_payload',
+      // schema is optional
+      url: '/:scope/payload/:resource/:space/:subpath/:shortname.:schema:ext'
+    },
+    asset: {
+      request: '/managed/data-asset'
+    },
+    info: {
+      health: '/managed/health/:space',
+      settings: '/info/settings',
+      manifest: '/info/manifest'
+    },
+    ticket: {
+      progress: '/managed/progress-ticket/:space/:subpath/:shortname/:action'
     }
 
   },

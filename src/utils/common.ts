@@ -23,7 +23,10 @@ export const getCookie = (key: string) => {
   return keyValue ? decodeURIComponent(keyValue[2]) : null;
 };
 
-
+export const cleanPath = (path: string) => {
+  // remove multiple slashes into one
+  return path?.replace(/\/+/g, '/');
+};
 
 export const generateShortName = (displayname: string) => {
   // replace all non-alphanumeric characters with underscore

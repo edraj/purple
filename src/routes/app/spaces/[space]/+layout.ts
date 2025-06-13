@@ -1,5 +1,5 @@
-import { PathState } from '../../../../services/path.state.svelte';
-import { ResourceListState } from '../../../../services/tree.state.svelte';
+import { PathState } from '$src/services/path.state';
+import { ResourceListState } from '$src/services/tree.state';
 
 export const load = async ({ params }) => {
   // parent has access to parent layout data

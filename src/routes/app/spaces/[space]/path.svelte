@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import type { PathState } from '../../../../services/path.state.svelte';
+  import type { PathState } from '../../../../services/path.state';
 
   const pathState = getContext('PathState') as PathState;
   const path = pathState.stateItem$;

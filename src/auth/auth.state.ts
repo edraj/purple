@@ -20,6 +20,20 @@ export class AuthState {
     SiteStorage.setItem(Config.Auth.redirectKey, value.replace(Res.Re, ''));
   }
 
+  static CheckAuth(user: IAuthUser) {
+    if (!user || !user.accessToken) {
+      return false;
+    }
+    if (Date.now() > user.expiresAt) {
+      return false;
+    }
+    return true;
+  }
+  static GetToken() {
+    const _auth = AuthState.currentState;
+    return AuthState.CheckAuth(_auth) ? _auth.accessToken : null;
+  }
+
   static get currentState() {
     if (browser) {
       return SiteStorage.getItem(Config.Auth.userAccessKey);
@@ -53,9 +67,7 @@ export class AuthState {
     return get(AuthState.profile);
   }
   static Logout() {
-    if (browser) {
-      SiteStorage.removeItem(Config.Auth.userAccessKey);
-    }
+    SiteStorage.removeItem(Config.Auth.userAccessKey);
     // also need to clean third party cookie from service
 
     AuthState.authUser.set(null);

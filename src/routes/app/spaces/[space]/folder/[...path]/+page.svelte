@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { EnumResourceType } from '$src/tsdmart/client';
+  import type { IResource } from '$src/services/resource.model';
+  import { EnumResourceType } from '$utils/dmart/query.model';
+  import { routeLink } from '$utils/route';
   import { type Observable } from 'rxjs';
-  import type { IResource } from '../../../../../../services/resource.model';
-  import { routeLink } from '../../../../../../utils/route';
 
   const { data } = $props();
   let resources: Observable<IResource[]> = $derived.by(() => {

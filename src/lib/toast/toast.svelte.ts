@@ -1,5 +1,5 @@
 import type { IUiError } from '$core/error.model';
-import { StateService } from '$core/state.svelte';
+import { StateService } from '$core/state.abstract';
 import { Res } from '$utils/resources';
 import { mount } from 'svelte';
 import { EnumTimeout, type IToast, type IToastButton } from './toast.model';

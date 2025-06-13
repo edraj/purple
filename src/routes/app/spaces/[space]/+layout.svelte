@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { displayDate } from '$lib/transform/date';
+  import { translate } from '$utils/resources';
   import { setContext } from 'svelte';
-  import { rootSpaceList } from '../../../../services/space.state.svelte';
-  import { translate } from '../../../../utils/resources';
+  import { rootSpaceList } from '../../../../services/space.state';
   import SpacePath from './path.svelte';
   import ResourceNodes from './ResourceNodes.svelte';
 

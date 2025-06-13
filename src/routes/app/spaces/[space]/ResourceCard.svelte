@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { IResourceNode } from '../../../../services/tree.state.svelte';
+  import type { IResourceNode } from '$src/services/tree.state';
 
   interface IProps {
     resource: IResourceNode;

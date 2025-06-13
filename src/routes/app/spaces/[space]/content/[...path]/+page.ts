@@ -1,6 +1,6 @@
 import { ResourceService } from '$src/services/resource.service.js';
-import { EnumResourceType } from '$src/tsdmart/client/index.js';
-import { ResourceState } from '../../../../../../services/resource.state.svelte.js';
+import { ResourceState } from '$src/services/resource.state.js';
+import { EnumResourceType } from '$utils/dmart/query.model.js';
 
 export const load = async ({ params }) => {
   // get resources of space and the path after decifering it

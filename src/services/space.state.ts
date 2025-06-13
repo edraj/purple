@@ -1,5 +1,5 @@
 import { map, Observable } from 'rxjs';
-import { ListStateService } from '../core/state.svelte';
+import { ListStateService } from '../core/state.abstract';
 import type { IResource } from './resource.model';
 import { SpaceService } from './space.service';
 

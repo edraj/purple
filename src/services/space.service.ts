@@ -1,9 +1,10 @@
-import { EnumQueryType, EnumRequestType, EnumSort } from '$src/tsdmart/client';
 import { Config } from "../config";
 import httpClient from "../core/http.service";
-import { mapRecords, mapResponse } from "../core/response.model";
+import { mapResponse } from "../core/response.model";
+import { EnumQueryType, EnumRequestType, EnumResourceType, EnumSort } from '../utils/dmart/query.model';
 import { Param, type IParam } from '../utils/param.model';
 import { Resource, type IResource } from './resource.model';
+import { ResourceService } from './resource.service';
 
 
 export class SpaceService {
@@ -21,9 +22,8 @@ export class SpaceService {
       subpath: '/',
       keyword: ''
     };
+    return ResourceService.GetResources(options);
 
-    const res = await httpClient.query(Param.MapQueryParams(options));
-    return Resource.NewInstances(mapRecords(res)?.records);
   }
 
   static async GetSpace(spacename: string): Promise<any> {
@@ -38,23 +38,36 @@ export class SpaceService {
       withAttachments: true,
       withPayload: true,
     };
+    return ResourceService.GetResource(options);
 
-    const res = await httpClient.query(Param.MapQueryParams(options));
+  }
 
+  // the only special case is this one
+  static async CreateSpace(space: Partial<IResource>): Promise<IResource> {
+
+    const req: any = Param.MapRequest({
+      space: space.shortname,
+      type: EnumRequestType.create,
+      records: [Resource.PrepPost(space)],
+    });
+
+
+    const res = await httpClient.post(Config.API.resource.space, req);
     return Resource.NewInstance(mapResponse(res));
   }
 
-
-  static async CreateSpace(space: Partial<IResource>): Promise<IResource> {
-    const res = await httpClient.space({
-      // space_name: Config.API.defaultSpace,
-      space_name: space.shortname,
-      request_type: EnumRequestType.create,
-      records: [Resource.PrepPost(space)]
+  static async UpdateSpace(space: IResource): Promise<void> {
+    return ResourceService.UpdateResource({
+      ...space,
+      type: EnumResourceType.space,
+      shortname: space.shortname,
+      space: space.shortname,
+      subpath: '/'
     });
+  }
 
-    return Resource.NewInstance(mapResponse(res));
-
+  static async DeleteSpace(space: IResource): Promise<void> {
+    return ResourceService.DeleteResource(space);
   }
 
 

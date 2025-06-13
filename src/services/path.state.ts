@@ -1,4 +1,4 @@
-import { StateService } from '../core/state.svelte';
+import { StateService } from '../core/state.abstract';
 
 export interface IPath {
   path: string;

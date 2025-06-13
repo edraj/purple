@@ -1,10 +1,10 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import { ResourceService } from '$src/services/resource.service';
+  import type { ResourceListState } from '$src/services/tree.state';
+  import { routeLink } from '$utils/route';
   import { defer, map } from 'rxjs';
   import { getContext } from 'svelte';
-  import { ResourceService } from '../../../../services/resource.service';
-  import type { ResourceListState } from '../../../../services/tree.state.svelte';
-  import { routeLink } from '../../../../utils/route';
 
   const { space } = page.params;
 

@@ -1,4 +1,16 @@
 
+
+export interface IClientError {
+  code: string,
+  status: string,
+  message: string,
+  request?: {
+    url: string,
+    method: string;
+  },
+  response: any;
+}
+
 export interface IUiError {
   code: number; // dmart error code
   message?: any; // technical as much as possible
@@ -6,10 +18,10 @@ export interface IUiError {
   uiCode?: string; // axios codefor client
 }
 
-export const UiError = (error: ClientError): IUiError => {
+export const UiError = (error: IClientError): IUiError => {
   let e: IUiError = {
     code: 0,
-    message: error, // fall back all error
+    message: error.message, // fall back all error
     uiCode: 'Unknown',
     status: 0,
   };
@@ -18,8 +30,8 @@ export const UiError = (error: ClientError): IUiError => {
     e.status = error.status;
     e.uiCode = error.code; // axios code
     // look for code inside info
-    e.code = error.response?.error?.code || 0;
-    let _m = error.response?.error?.type || ''; // validaion
+    e.code = error.response?.code || 0;
+    let _m = error.response?.type || ''; // validaion
     e.message = _m;
   }
   return e;

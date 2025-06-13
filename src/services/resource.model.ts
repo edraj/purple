@@ -1,5 +1,6 @@
-import { EnumResourceType, type EnumContentType, type IRecordWithAttachment } from '$src/tsdmart/client';
-import { makeDate } from '../utils/common';
+import { cleanPath, makeDate } from '../utils/common';
+import { EnumResourceType, type EnumContentType } from '../utils/dmart/query.model';
+import type { IRecordWithAttachment } from '../utils/dmart/record.model';
 import { Translation, type ITranslation } from "../utils/translation.model";
 
 export interface IResource {
@@ -37,7 +38,7 @@ export class Resource {
     if (!resource) return null;
 
     // return subpath is not a true representation of the path
-    const _subpath = (`/${resource.subpath}/${resource.shortname}`).replace(/\/+/gi, '/');
+    const _subpath = cleanPath(`/${resource.subpath}/${resource.shortname}`);
     return {
       contentType: resource.content_type || null,
       created: makeDate(resource.created_at),
@@ -65,15 +66,15 @@ export class Resource {
 
 
   static PrepPost(resource: Partial<IResource>): IRecordWithAttachment {
+
     return {
       resource_type: EnumResourceType.space,
       shortname: resource.shortname,
       subpath: resource.subpath || '/',
       attributes: {
         is_active: true,
-        displayname: resource.displaynameInput, // TODO: proper mapping
+        displayname: resource.displaynameInput,
         description: resource.descriptionInput,
-        // ...payload // check if this can be empty
       }
     };
 

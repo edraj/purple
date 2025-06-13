@@ -1,6 +1,5 @@
 <script lang="ts">
-  const { placeholder, error, invalidForm, forLabel, type, input, help }: any =
-    $props();
+  const { placeholder, error, forLabel, type, input, help }: any = $props();
 
   const cssType = type ? `ol-${type}` : '';
 

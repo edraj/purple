@@ -1,20 +1,27 @@
+import { Config } from '$src/config';
 import { Res } from '$utils/resources';
 
 export interface ITranslation {
   [key: string]: string;
 }
 
+
 export class Translation {
-  static MapLanguage(prop: ITranslation): string {
+  static MapLanguage(prop: any): string {
     return prop ? prop[Res.language] : '';
   }
 
-  // TODO: make a loop from config languages
   static PrepLanguage(prop: ITranslation): ITranslation {
-    return {
-      en: prop['en'],
-      ar: prop['ar'],
-      ku: prop['ku'],
-    };
+
+    return Config.Res.languages.reduce((prev, curr) => {
+      prev[curr.name] = prop[curr.name];
+      return prev;
+    }, {});
+
+    // return {
+    //   en: prop['en'],
+    //   ar: prop['ar'],
+    //   ku: prop['ku'],
+    // };
   }
 }

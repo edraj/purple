@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import type { PathState } from '$src/services/path.state';
+  import type { IResourceNode, ResourceListState } from '$src/services/tree.state';
+  import { routeLink } from '$utils/route';
   import { tap, type Observable } from 'rxjs';
   import { getContext } from 'svelte';
-  import type { PathState } from '../../../../services/path.state.svelte';
-  import type { IResourceNode, ResourceListState } from '../../../../services/tree.state.svelte';
-  import { routeLink } from '../../../../utils/route';
   import ResourceCard from './ResourceCard.svelte';
   import ResourceNodes from './ResourceNodes.svelte';
 

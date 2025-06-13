@@ -1,7 +1,7 @@
-import { EnumResourceType } from '$src/tsdmart/client';
 import { defer, map, switchMap, type Observable } from 'rxjs';
-import { ListStateService } from '../core/state.svelte';
-import type { IPath } from './path.state.svelte';
+import { ListStateService } from '../core/state.abstract';
+import { EnumResourceType } from '../utils/dmart/query.model';
+import type { IPath } from './path.state';
 import type { IResource } from './resource.model';
 import { ResourceService } from './resource.service';
 

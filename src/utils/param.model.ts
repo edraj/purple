@@ -100,6 +100,8 @@ export class Param {
   }
 
   static MapRequest(options: IRequestParam): any {
+
+
     return {
       space_name: options.space || Config.API.defaultSpace,
       request_type: options.type || EnumRequestType.create,

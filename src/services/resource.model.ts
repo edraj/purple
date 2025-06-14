@@ -106,4 +106,16 @@ export class Resource {
     };
 
   }
+
+  static PrepDelete(resource: Partial<IResource>): any {
+    // remove last part of subpath
+    const _subpath = resource.subpath.replace(resource.shortname, '');
+
+    return {
+      resource_type: resource.type,
+      shortname: resource.shortname,
+      subpath: _subpath || '/',
+      attributes: {}
+    };
+  }
 }

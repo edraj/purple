@@ -57,6 +57,7 @@ export class TreeState extends ListStateService<IResourceNode> {
           r.expanded = true;
         }
       });
+      // TODO: update others too
     }
   }
 

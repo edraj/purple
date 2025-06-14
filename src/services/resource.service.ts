@@ -55,8 +55,13 @@ export class ResourceService {
   }
 
   static async DeleteResource(resource: IResource): Promise<boolean> {
-    const req = this.getRequest(EnumRequestType.delete, resource);
-    await httpClient.post(req.url, req.req);
+    const req: any = Param.MapRequest({
+      space: resource.space,
+      type: EnumRequestType.delete,
+      records: [Resource.PrepDelete(resource)],
+    });
+    ;
+    await httpClient.post(Config.API.resource.request.replace(':scope', 'managed'), req);
     return true;
   }
 }

@@ -14,6 +14,7 @@
     Dismiss: '',
     Unknown: 'لم نستطع تنفيذ الأمر المطلوب لخطأ ما. نحن نتحقق من هذا الأمر حالًا.',
     DONE: 'تمّ الأمر',
+    DELETED: 'حُذف',
     UNAUTHORIZED: 'ليس لديك الصلاحية لمشاهدة هذه الصفحة.',
     SAVED: 'حُفظ',
     INVALID_TOOLONG: 'Too long',
@@ -66,6 +67,6 @@
   global.cl[_Language] = global.cl.resources;
 
 
-// @ts-ignore
+  // @ts-ignore
 })(typeof globalThis !== 'undefined' && globalThis || typeof global !== 'undefined' && global ||
   typeof window !== 'undefined' && window);

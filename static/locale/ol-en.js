@@ -15,6 +15,7 @@
     Dismiss: 'Dismiss',
     Unknown: 'Oops! We could not perform the required action for some reason. We are looking into it right now.',
     DONE: 'Done',
+    DELETED: 'Deleted',
     UNAUTHORIZED: 'You are not authorised to view this page.',
     SAVED: 'Saved successfully',
     INVALID_TOOLONG: 'Too long',
@@ -69,7 +70,7 @@
 
 
 
-// @ts-ignore
+  // @ts-ignore
 })(typeof globalThis !== 'undefined' && globalThis || typeof global !== 'undefined' && global ||
   typeof window !== 'undefined' && window);
 

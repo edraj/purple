@@ -25,7 +25,6 @@
     // first reset path state so that it doesnt trigger a sycn
     pathState.update({ source: 'toggle' });
     treeState.Toggle(resource);
-    // now get children if expanded
   };
 
   const select = (resource: IResourceNode) => {

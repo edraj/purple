@@ -90,11 +90,11 @@
 
 {#if $pathItem}
   <div class="small spaced">
-    <strong>{$pathItem.params?.space}</strong>
+    <a href={routeLink(`/spaces/${$pathItem.params?.space}`)}><strong>{$pathItem.params?.space}</strong></a>
     {$pathItem.params?.path}
   </div>
   {#if $pathItem.type === EnumResourceType.folder}
-    <button onclick={() => addFolder($pathItem)}>{translate('Add Folder', 'ADD_FOLDER')}</button>
-    <button onclick={() => addContent($pathItem)}>{translate('Add Content', 'ADD_CONTENT')}</button>
+    <button class="btn-fake" onclick={() => addFolder($pathItem)}>{translate('Add Folder', 'ADD_FOLDER')}</button>
+    <button class="btn-fake" onclick={() => addContent($pathItem)}>{translate('Add Content', 'ADD_CONTENT')}</button>
   {/if}
 {/if}

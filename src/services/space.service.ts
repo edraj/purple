@@ -56,7 +56,7 @@ export class SpaceService {
     return Resource.NewInstance(mapResponse(res));
   }
 
-  static async UpdateSpace(space: IResource): Promise<void> {
+  static async UpdateSpace(space: IResource): Promise<IResource> {
     return ResourceService.UpdateResource({
       ...space,
       type: EnumResourceType.space,
@@ -64,9 +64,10 @@ export class SpaceService {
       space: space.shortname,
       subpath: '/'
     });
+
   }
 
-  static async DeleteSpace(space: IResource): Promise<void> {
+  static async DeleteSpace(space: IResource): Promise<boolean> {
     return ResourceService.DeleteResource(space);
   }
 

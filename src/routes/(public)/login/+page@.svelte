@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import OlInput from '$lib/input/OlInput.svelte';
-  import { Toast } from '$lib/toast/toast.svelte';
   import { AuthService } from '$src/auth/auth.service';
   import { AuthState } from '$src/auth/auth.state';
   import { Config } from '$src/config';
+  import { Toast } from '$src/lib/toast/toast.service';
   import { routeLink } from '$utils/route';
 
   let username = $state('');
@@ -27,9 +27,8 @@
         Toast.HandleUiError(e);
       })
       .then((_) => {
-        goto(
-          routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true),
-        );
+        goto(routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true));
+        // redirect(307, routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true))
       });
   }
 </script>
@@ -47,8 +46,7 @@
               {placeholder}
               required
               autocomplete="email"
-              id="username"
-            />
+              id="username" />
           {/snippet}
         </OlInput>
         <OlInput placeholder="Password" forLabel="password" error="required">
@@ -61,14 +59,9 @@
                 {placeholder}
                 required
                 autocomplete="current-password"
-                id="password"
-              />
-              <button
-                type="button"
-                class="btn-fake"
-                onclick={() => (showPassword = !showPassword)}
-                tabindex="-1">show</button
-              >
+                id="password" />
+              <button type="button" class="btn-fake" onclick={() => (showPassword = !showPassword)} tabindex="-1"
+                >show</button>
             </div>
           {/snippet}
         </OlInput>

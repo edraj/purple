@@ -1,23 +1,22 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { displayDate } from '$lib/transform/date';
+  import SpacePath from '$src/components/Path.svelte';
+  import ResourceNodes from '$src/components/ResourceNodes.svelte';
+  import { rootSpaceList } from '$src/services/space.state';
   import { translate } from '$utils/resources';
   import { setContext } from 'svelte';
-  import { rootSpaceList } from '../../../../services/space.state';
-  import SpacePath from './path.svelte';
-  import ResourceNodes from './ResourceNodes.svelte';
 
   const { data, children } = $props();
 
   const space = rootSpaceList.GetSpace(page.params.space);
   setContext('PathState', data.pathState);
-  setContext('TreeState', data.resourceListState);
+  setContext('TreeState', data.treeState);
+  setContext('FolderListState', data.folderListState);
 
   data.pathState.SetState({ path: page.url.pathname });
 
-  $effect(() => {
-    data.pathState.update({ path: page.url.pathname, params: page.params, source: 'route' });
-  });
+  // dosomething, watch inner params page.svelte, to access state
 </script>
 
 <div class="page">

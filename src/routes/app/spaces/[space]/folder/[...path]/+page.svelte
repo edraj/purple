@@ -1,27 +1,13 @@
 <script lang="ts">
   import type { IResource } from '$src/services/resource.model';
-  import { EnumResourceType } from '$utils/dmart/query.model';
   import { routeLink } from '$utils/route';
   import { type Observable } from 'rxjs';
 
   const { data } = $props();
   let resources: Observable<IResource[]> = $derived.by(() => {
-    return data.pageResources.stateList$;
+    return data.folderListState.stateList$;
   });
-
-  const addSomething = () => {
-    data.pageResources.add({
-      shortname: 'ayyash',
-      type: EnumResourceType.folder,
-      created: new Date(),
-      updated: new Date(),
-    });
-  };
 </script>
-
-<div class="spaced">
-  <button class="btn-rev btn-small" onclick={addSomething}>add something</button>
-</div>
 
 {#if $resources?.length}
   <h4>{$resources.length} resources</h4>

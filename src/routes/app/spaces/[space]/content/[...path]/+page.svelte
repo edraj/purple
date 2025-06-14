@@ -1,11 +1,15 @@
 <script lang="ts">
+  import type { IResource } from '$src/services/resource.model';
   import { type Observable } from 'rxjs';
-  import type { IResource } from '../../../../../../services/resource.model';
+  import { setContext } from 'svelte';
 
   const { data } = $props();
+
   let resource: Observable<IResource> = $derived.by(() => {
     return data.pageResource.stateItem$;
   });
+
+  setContext('PageResourceState', data.pageResource);
 
   const addSomething = () => {
     data.pageResource.update({
@@ -14,7 +18,7 @@
   };
 </script>
 
-<button class="btn-rev" onclick={addSomething}>add something</button>
+<!-- <button class="btn-rev" onclick={addSomething}>add something</button> -->
 {#if $resource}
   <div class="spaced">
     {$resource.displayname}

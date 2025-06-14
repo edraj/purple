@@ -1,15 +1,14 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { ResourceService } from '$src/services/resource.service';
-  import type { ResourceListState } from '$src/services/tree.state';
   import { routeLink } from '$utils/route';
   import { defer, map } from 'rxjs';
-  import { getContext } from 'svelte';
 
   const { space } = page.params;
 
-  const treeState = getContext('TreeState') as ResourceListState;
-  const nodes = treeState.stateList$.pipe(map((n) => n.filter((f) => f.parentId === space)));
+  const { data } = $props();
+
+  const nodes = data.treeState.stateList$.pipe(map((n) => n.filter((f) => f.parentId === space)));
 
   // get all list from sevice again
   const resources = defer(() =>
@@ -21,9 +20,7 @@
 </script>
 
 <div class="container">
-  here is the space page, why is ...resources kicking off? // show only root level here, the on page change change what
-  is displayed
-  {$nodes.length}
+  {$nodes.length} nodes in space root noly
   <table class="bordered spacedout">
     <thead>
       <tr>

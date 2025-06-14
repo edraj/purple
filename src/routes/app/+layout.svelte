@@ -1,11 +1,11 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { AuthService } from '$src/auth/auth.service.js';
   import { AuthState } from '$src/auth/auth.state';
+  import Language from '$src/components/Language.svelte';
   import { Config } from '$src/config';
-  import Language from '$src/shared/Language.svelte';
   import { translate } from '$utils/resources';
   import { routeLink } from '$utils/route';
-  import { AuthService } from '../../auth/auth.service.js';
   let { children, data } = $props();
   const user = AuthState.GetUser();
 

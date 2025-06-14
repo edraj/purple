@@ -6,6 +6,11 @@ export interface ITranslation {
 }
 
 
+export const languageInput = Config.Res.languages.reduce((acc: any, cur) => {
+  acc[cur.name] = [];
+  return acc;
+}, {});
+
 export class Translation {
   static MapLanguage(prop: any): string {
     return prop ? prop[Res.language] : '';

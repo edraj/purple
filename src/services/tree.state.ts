@@ -12,7 +12,7 @@ export interface IResourceNode extends IResource {
 }
 
 
-export class ResourceListState extends ListStateService<IResourceNode> {
+export class TreeState extends ListStateService<IResourceNode> {
   constructor() {
 
     super();
@@ -68,16 +68,16 @@ export class ResourceListState extends ListStateService<IResourceNode> {
       return _resource;
     }
   }
-  AddFolder(resource: IResourceNode, path: string) {
+  AddFolder(resource: IResourceNode, paramPath: string) {
     // find the parentId from path
     // space + type + path, the type is always a folder, space is in resource
-    const _parent = this.currentList.find(r => r.path === `${resource.space}/folder/${path}`);
+    const _parent = this.currentList.find(r => r.path === `${resource.space}/folder/${paramPath}`);
+    // if not poulated, let server do this
     if (_parent && _parent.populated) {
-      // if not poulated, let server do this
       this.add({ ...resource, parentId: _parent.id, expanded: false, populated: false });
     }
     // if root, add with parent id space
-    if (path === '') {
+    if (paramPath === '') {
       this.add({ ...resource, parentId: resource.space, expanded: false, populated: false });
     }
   }

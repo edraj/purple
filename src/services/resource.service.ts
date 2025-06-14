@@ -28,11 +28,11 @@ export class ResourceService {
   }
 
 
-  private static getRequest(type: EnumRequestType, record: Partial<IResource>): any {
+  private static getRequest(type: EnumRequestType, resource: Partial<IResource>): any {
     const req: any = Param.MapRequest({
-      space: Config.API.defaultSpace,
+      space: resource.space,
       type,
-      records: [Resource.PrepPost(record)],
+      records: [Resource.PrepPost(resource)],
     });
     return { req, url: Config.API.resource.request.replace(':scope', 'managed') };
 
@@ -42,20 +42,21 @@ export class ResourceService {
 
     const req = this.getRequest(EnumRequestType.create, resource);
     const res = await httpClient.post(req.url, req.req);
-    return Resource.NewInstance(mapResponse(res));
+    // hmmm, pass back to the space
+    return Resource.NewInstance(mapResponse(res), resource.space);
   }
 
-  static async UpdateResource(resource: IResource): Promise<void> {
+  static async UpdateResource(resource: IResource): Promise<IResource> {
 
     // replace
     const req = this.getRequest(EnumRequestType.update, resource);
-    await httpClient.post(req.url, req.req);
-    return null;
+    const res = await httpClient.post(req.url, req.req);
+    return Resource.NewInstance(mapResponse(res), resource.space);
   }
 
-  static async DeleteResource(resource: IResource): Promise<void> {
+  static async DeleteResource(resource: IResource): Promise<boolean> {
     const req = this.getRequest(EnumRequestType.delete, resource);
     await httpClient.post(req.url, req.req);
-    return null;
+    return true;
   }
 }

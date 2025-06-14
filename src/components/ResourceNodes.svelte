@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import type { PathState } from '$src/services/path.state';
-  import type { IResourceNode, ResourceListState } from '$src/services/tree.state';
+  import type { IResourceNode, TreeState } from '$src/services/tree.state';
   import { routeLink } from '$utils/route';
   import { tap, type Observable } from 'rxjs';
   import { getContext } from 'svelte';
@@ -14,7 +14,7 @@
   }
   let { resource, space }: IProps = $props();
 
-  const treeState = getContext('TreeState') as ResourceListState;
+  const treeState = getContext('TreeState') as TreeState;
   const pathState = getContext('PathState') as PathState;
 
   let nodes: Observable<IResourceNode[]> = treeState

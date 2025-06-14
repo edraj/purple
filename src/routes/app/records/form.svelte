@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { ValidateForm } from "$lib/input/form";
-  import OlInput from "$lib/input/OlInput.svelte";
-  import { Toast } from "$lib/toast/toast.svelte";
-  import type { IDmartRecord } from "$src/services/record.model";
-  import { toISODateString } from "$utils/common";
-  import type { IViewMode } from "$utils/view.model";
+  import { ValidateForm } from '$lib/input/form';
+  import OlInput from '$lib/input/OlInput.svelte';
+  import { Toast } from '$src/lib/toast/toast.service';
+  import type { IDmartRecord } from '$src/services/record.model';
+  import { toISODateString } from '$utils/common';
+  import type { IViewMode } from '$utils/view.model';
 
   interface IPageProps {
     mode?: IViewMode;
@@ -13,12 +13,7 @@
     oncancel?: () => void;
   }
 
-  let {
-    mode = { forNew: true },
-    record,
-    onsave,
-    oncancel,
-  }: IPageProps = $props();
+  let { mode = { forNew: true }, record, onsave, oncancel }: IPageProps = $props();
 
   let formState = $state({
     displayname: null,
@@ -58,14 +53,7 @@
   <div class="spaced">
     <OlInput placeholder="Title" forLabel="title" error="required">
       {#snippet input({ placeholder, css })}
-        <input
-          class="w100 {css}"
-          type="text"
-          bind:value={formState.displayname}
-          {placeholder}
-          required
-          id="title"
-        />
+        <input class="w100 {css}" type="text" bind:value={formState.displayname} {placeholder} required id="title" />
       {/snippet}
     </OlInput>
   </div>
@@ -73,14 +61,7 @@
   <div class="spaced">
     <OlInput placeholder="Date" forLabel="date" error="required">
       {#snippet input({ placeholder, css })}
-        <input
-          class="w100 {css}"
-          type="date"
-          bind:value={formState.date}
-          {placeholder}
-          required
-          id="date"
-        />
+        <input class="w100 {css}" type="date" bind:value={formState.date} {placeholder} required id="date" />
       {/snippet}
     </OlInput>
   </div>
@@ -88,13 +69,7 @@
   <div class="spaced">
     <OlInput placeholder="Description" forLabel="desc" error="required">
       {#snippet input({ placeholder, css })}
-        <textarea
-          class="w100 {css}"
-          id="desc"
-          rows="3"
-          required
-          bind:value={formState.description}
-          {placeholder}
+        <textarea class="w100 {css}" id="desc" rows="3" required bind:value={formState.description} {placeholder}
         ></textarea>
       {/snippet}
     </OlInput>

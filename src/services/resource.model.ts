@@ -1,5 +1,5 @@
 import { cleanPath, makeDate } from '../utils/common';
-import { EnumResourceType, type EnumContentType } from '../utils/dmart/query.model';
+import { EnumContentType, EnumResourceType } from '../utils/dmart/query.model';
 import type { IRecordWithAttachment } from '../utils/dmart/record.model';
 import { Translation, type ITranslation } from "../utils/translation.model";
 
@@ -26,6 +26,8 @@ export interface IResource {
   displaynameInput?: ITranslation;
   descriptionInput?: ITranslation;
   isHidden?: boolean;
+
+  body?: any; // for content
 }
 
 
@@ -33,7 +35,7 @@ export interface IResource {
 
 export class Resource {
 
-  static NewInstance(resource: any, options?: any): IResource {
+  static NewInstance(resource: any, space?: string): IResource {
 
     if (!resource) return null;
 
@@ -49,14 +51,15 @@ export class Resource {
       id: resource.uuid,
       isActive: resource.is_active || false,
       isHidden: resource.hide_space || false,
-      path: `${resource.space_name}/${resource.resource_type}${_subpath}`,
+      path: `${resource.space_name || space}/${resource.resource_type}${_subpath}`,
       schema: resource.schema_shortname,
       shortname: resource.shortname,
-      space: resource.space_name,
+      space: resource.space_name || space,
       subpath: _subpath,
       tags: resource.tags,
       type: resource.resource_type,
-      updated: makeDate(resource.updated_at)
+      updated: makeDate(resource.updated_at),
+      body: resource.body
     };
   }
   static NewInstances(resources: any[]): IResource[] {
@@ -67,14 +70,38 @@ export class Resource {
 
   static PrepPost(resource: Partial<IResource>): IRecordWithAttachment {
 
+    let payload = null;
+
+    if (resource.type === EnumResourceType.content) {
+      payload = {
+        payload: {
+          body: resource.body || '',
+          schema_shortname: null,
+          content_type: resource.contentType || EnumContentType.text
+        }
+      };
+    }
+    // if (resource.type === EnumResourceType.folder) {
+    //   // add payloat for content and folder, folder has its own schema: folder_rendering, and it is optional
+    //   payload = {
+    //     payload: {
+    //       // body: resource.body, // the json payload
+    //       schema_shortname: 'folder_rendering',
+    //       content_type: EnumContentType.json
+    //     }
+    //   };
+    // }
+
     return {
-      resource_type: EnumResourceType.space,
+      resource_type: resource.type || EnumResourceType.space,
       shortname: resource.shortname,
       subpath: resource.subpath || '/',
       attributes: {
         is_active: true,
         displayname: resource.displaynameInput,
         description: resource.descriptionInput,
+        tags: resource.tags || [],
+        ...payload
       }
     };
 

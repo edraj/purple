@@ -1,11 +1,11 @@
 <script lang="ts">
   import { Dialog } from '$lib/dialog/service.svelte';
-  import { Toast } from '$lib/toast/toast.svelte';
   import { displayDate } from '$lib/transform/date';
+  import ConfirmDialog from '$src/components/Confirm.dialog.svelte';
+  import { Toast } from '$src/lib/toast/toast.service';
   import { type IResource } from '$src/services/resource.model';
   import { SpaceService } from '$src/services/space.service';
   import { rootSpaceList } from '$src/services/space.state';
-  import { generateShortName } from '$utils/common';
   import { translate } from '$utils/resources';
   import { routeLink } from '$utils/route';
   import type { Observable } from 'rxjs';
@@ -16,7 +16,7 @@
   const add = () => {
     // when added do semethong
     Dialog.open(FormDialog, {
-      title: 'Add new space',
+      title: translate('Add new space', 'ADD_NEW_SPACE'),
       css: 'animate frombottom',
       data: { mode: { forNew: true } },
       onclose: async (space: IResource) => {
@@ -31,19 +31,39 @@
   const edit = (space: IResource) => {
     // when added do semethong
     Dialog.open(FormDialog, {
-      title: 'Add new space',
+      title: translate('Edit space', 'EDIT_SPACE'),
       css: 'animate frombottom',
       data: { mode: { forNew: false }, space },
       onclose: async (space: IResource) => {
         if (!space) return;
-        const _newSpace: IResource = {
-          ...space,
-          shortname: generateShortName(space.displaynameInput.en),
-        };
 
-        // await SpaceService.CreateSpace(_newSpace);
-        rootSpaceList.add(<IResource>_newSpace);
+        const _space = await SpaceService.UpdateSpace(space);
+        _attn(_space);
+        rootSpaceList.edit(_space);
         Toast.ShowSuccess('DONE');
+      },
+    });
+  };
+
+  const handleDelete = (space: IResource) => {
+    Dialog.open(ConfirmDialog, {
+      title: translate('Delete space', 'DELETE_SPACE'),
+      css: 'modal-confirm',
+      data: {
+        message: `
+          <h3>${space.displayname}</h3>
+          ${translate(
+            `Are you sure you want to delete this space?
+          This action cannot be undone.`,
+            'ARE_YOU_SURE_DELETE_SPACE',
+          )}`,
+      },
+      onclose: async (confirmed) => {
+        if (confirmed) {
+          await SpaceService.DeleteSpace(space);
+          rootSpaceList.remove(space);
+          Toast.ShowSuccess('DONE');
+        }
       },
     });
   };
@@ -68,7 +88,9 @@
                 </div>
               </a>
               <div class="tail smaller">
-                {displayDate(space.updated)} - <button class="btn-fake" onclick={() => edit(space)}>Edit</button>
+                {displayDate(space.updated)}
+                <button class="btn-fake" onclick={() => edit(space)}>{translate('Edit', 'EDIT')}</button>
+                <button class="btn-fake" onclick={() => handleDelete(space)}>{translate('Delete', 'DELETE')}</button>
               </div>
             </div>
           </li>

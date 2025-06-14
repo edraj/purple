@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import Language from '$src/shared/Language.svelte';
+  import Language from '$src/components/Language.svelte';
   import { routeLink } from '$utils/route';
   import { AuthService } from '../../auth/auth.service.js';
   import { AuthState } from '../../auth/auth.state.js';
@@ -43,13 +43,9 @@
         {#if user?.shortname}
           <a href={routeLink(`/profiles`)}>{user.displayname}</a>
           |
-          <a class="smaller" onclick={logout}
-            >({translate('Logout', 'Logout')})</a
-          >
+          <a class="smaller" onclick={logout}>({translate('Logout', 'Logout')})</a>
         {:else}
-          <a href={routeLink(Config.Auth.loginRoute, true)}
-            >{translate('Login', 'Login')}</a
-          >
+          <a href={routeLink(Config.Auth.loginRoute, true)}>{translate('Login', 'Login')}</a>
         {/if}
       </li>
       <li>

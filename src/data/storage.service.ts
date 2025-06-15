@@ -73,7 +73,7 @@ export class StorageService {
         return null;
       }
 
-      return _value.value;
+      return _value.value || null; // i might be null
     }
     return null;
   }

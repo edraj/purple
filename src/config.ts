@@ -2,7 +2,7 @@
 
 export const Config = {
   Basic: {
-    defaultRoute: '/app',
+    defaultRoute: '/',
     appRoot: '/app',
     defaultSize: 25,
     defaultDateFormt: 'DD-MM-YYYY',

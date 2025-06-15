@@ -7,7 +7,7 @@ export interface ITranslation {
 
 
 export const languageInput = Config.Res.languages.reduce((acc: any, cur) => {
-  acc[cur.name] = [];
+  acc[cur.name] = null;
   return acc;
 }, {});
 
@@ -16,17 +16,4 @@ export class Translation {
     return prop ? prop[Res.language] : '';
   }
 
-  static PrepLanguage(prop: ITranslation): ITranslation {
-
-    return Config.Res.languages.reduce((prev, curr) => {
-      prev[curr.name] = prop[curr.name];
-      return prev;
-    }, {});
-
-    // return {
-    //   en: prop['en'],
-    //   ar: prop['ar'],
-    //   ku: prop['ku'],
-    // };
-  }
 }

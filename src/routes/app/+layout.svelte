@@ -23,6 +23,9 @@
   <nav>
     <ul class="row boxed">
       <li>
+        <a href={routeLink('/', true)}>{translate('Home', 'HOME')}</a>
+      </li>
+      <li>
         <a href={routeLink('/spaces')}>{translate('Spaces', 'Spaces')}</a>
       </li>
       <li>

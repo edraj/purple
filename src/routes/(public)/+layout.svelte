@@ -27,11 +27,9 @@
   <nav>
     <ul class="boxed row">
       <li>
-        <a href={routeLink('/', true)}>Home</a>
+        <a href={routeLink('/', true)}>{translate('Home', 'HOME')}</a>
       </li>
-      <li>
-        <a href={routeLink('/spaces')}>{translate('Spaces', 'Spaces')}</a>
-      </li>
+
       {#each pages as item}
         <li>
           <a href={routeLink(`/pages/${item.shortname}`, true)}>
@@ -41,7 +39,7 @@
       {/each}
       <li class="lauto">
         {#if user?.shortname}
-          <a href={routeLink(`/profiles`)}>{user.displayname}</a>
+          <a href={routeLink(`/account`)}>{user.displayname}</a>
           |
           <a class="smaller" onclick={logout}>({translate('Logout', 'Logout')})</a>
         {:else}

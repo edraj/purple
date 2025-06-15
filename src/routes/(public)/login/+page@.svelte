@@ -5,6 +5,7 @@
   import { AuthState } from '$src/auth/auth.state';
   import { Config } from '$src/config';
   import { Toast } from '$src/lib/toast/toast.service';
+  import { translate } from '$utils/resources';
   import { routeLink } from '$utils/route';
 
   let username = $state('');
@@ -27,8 +28,7 @@
         Toast.HandleUiError(e);
       })
       .then((_) => {
-        goto(routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true));
-        // redirect(307, routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true))
+        goto(routeLink(AuthState.redirectUrl, true) || routeLink(Config.Basic.defaultRoute));
       });
   }
 </script>
@@ -67,7 +67,8 @@
         </OlInput>
 
         <div>
-          <button class="btn-rev" type="submit">Login</button>
+          <button class="btn-rev" type="submit">{translate('Login', 'LOGIN')}</button>
+          <a href={routeLink('/', true)} class="btn-fake">{translate('Home', 'HOME')}</a>
         </div>
       </div>
     </form>

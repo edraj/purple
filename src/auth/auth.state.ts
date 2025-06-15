@@ -16,8 +16,12 @@ export class AuthState {
     return SiteStorage.getItem(Config.Auth.redirectKey);
   }
   static set redirectUrl(value: string) {
-    // remove language
-    SiteStorage.setItem(Config.Auth.redirectKey, value.replace(Res.Re, ''));
+    if (!value) {
+      SiteStorage.removeItem(Config.Auth.redirectKey);
+    } else {
+      // remove language
+      SiteStorage.setItem(Config.Auth.redirectKey, value?.replace(Res.Re, ''));
+    }
   }
 
   static CheckAuth(user: IAuthUser) {
@@ -72,5 +76,7 @@ export class AuthState {
 
     AuthState.authUser.set(null);
     AuthState.profile.set(null);
+
+    AuthState.redirectUrl = null;
   }
 }

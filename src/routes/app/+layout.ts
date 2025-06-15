@@ -7,8 +7,7 @@ import { DataService } from '../../data/data.service';
 export const load = async () => {
   // guard route
   if (!AuthState.currentState) {
-    // goto(routeLink(Config.Auth.loginRoute, true));
-    redirect(307, routeLink(AuthState.redirectUrl || Config.Basic.defaultRoute, true));
+    redirect(307, routeLink(Config.Auth.loginRoute, true));
   }
 
   const s = await DataService.GetSomething();

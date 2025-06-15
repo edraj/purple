@@ -32,7 +32,7 @@ export class DmartRecord {
     return {
       resource_type: EnumResourceType.content,
       shortname: record.shortname,
-      subpath: Config.API.records.list,
+      subpath: Config.API.maqola.records,
       attributes: {
         is_active: true,
         displayname: {
@@ -52,4 +52,6 @@ export class DmartRecord {
       },
     };
   }
+
+
 }

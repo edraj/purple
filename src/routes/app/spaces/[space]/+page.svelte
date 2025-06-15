@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
+  import ResourceList from '$src/components/ResourceList.svelte';
   import { ResourceService } from '$src/services/resource.service';
-  import { routeLink } from '$utils/route';
   import { defer, map } from 'rxjs';
 
   const { space } = page.params;
@@ -19,30 +19,9 @@
   );
 </script>
 
+this is only for spacE?!!!!
 <div class="container">
   {$nodes.length} nodes in space root noly
-  <table class="bordered spacedout">
-    <thead>
-      <tr>
-        <th>shortname</th>
-        <th>Resource type</th>
-        <th>Schema</th>
-        <th>Created</th>
-        <th>Updated</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each $resources as resource}
-        <tr>
-          <td>
-            <a href={routeLink(`/spaces/${resource.path}`)}>{resource.shortname}</a>
-          </td>
-          <td>{resource.type}</td>
-          <td>{resource.schema}</td>
-          <td>{resource.created}</td>
-          <td>{resource.updated}</td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
+
+  <ResourceList resources={$resources}></ResourceList>
 </div>

@@ -39,11 +39,14 @@ export const Config = {
     autoShortname: 'auto',
     defaultSpace: 'maqola',
     contentSpace: 'Public',
+    schemaFolder: 'schema', // specially handled
     data: {
       metafile: '/schema/metafile',
     },
-    records: {
-      list: '/records',
+    // for special implementations be explicit
+    maqola: {
+      space: '/maqola',
+      records: '/records'
     },
     users: {
       list: '/users'

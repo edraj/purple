@@ -1,6 +1,7 @@
 import httpClient from '$core/http.service';
 import { Config } from '$src/config';
-import { mapRecords } from '$src/core/response.model';
+import { mapRecords, mapResource } from '$src/core/response.model';
+import { Resource } from '$src/services/resource.model';
 import { EnumQueryType, EnumRequestType } from '../utils/dmart/query.model';
 import { Param } from '../utils/param.model';
 import { DmartRecord, type IDmartRecord } from './record.model';
@@ -16,40 +17,42 @@ export class RecordService {
         withPayload: true,
         space: Config.API.defaultSpace,
         size: 1000,
-        subpath: Config.API.records.list,
+        subpath: Config.API.maqola.records,
         keyword: '',
       })
     );
     return DmartRecord.NewInstances(mapRecords(res));
   }
-  // could be higher up
 
-  private static getRequest(type: EnumRequestType, record: Partial<IDmartRecord>): any {
+  static async CreateRecord(record: Partial<IDmartRecord>): Promise<IDmartRecord> {
+
     const req: any = Param.MapRequest({
       space: Config.API.defaultSpace,
-      type,
+      type: EnumRequestType.create,
       records: [DmartRecord.PrepPost(record)],
     });
-    return { req, url: Config.API.resource.request.replace(':scope', 'managed') };
-
+    const res = await httpClient.post(Config.API.resource.request.replace(':scope', 'managed'), req);
+    return DmartRecord.NewInstance(mapResource(res));
   }
 
-  static async CreateRecord(record: Partial<IDmartRecord>): Promise<void> {
-
-    const req = this.getRequest(EnumRequestType.create, record);
-    await httpClient.post(req.req, req.url);
-    return null;
+  static async UpdateRecord(record: IDmartRecord): Promise<IDmartRecord> {
+    const req: any = Param.MapRequest({
+      space: Config.API.defaultSpace,
+      type: EnumRequestType.update,
+      records: [DmartRecord.PrepPost(record)],
+    });
+    const res = await httpClient.post(Config.API.resource.request.replace(':scope', 'managed'), req);
+    return DmartRecord.NewInstance(mapResource(res));
   }
 
-  static async UpdateRecord(record: IDmartRecord): Promise<void> {
-    const req = this.getRequest(EnumRequestType.update, record);
-    await httpClient.post(req.req, req.url);
-    return null;
-  }
+  static async DeleteRecord(record: IDmartRecord): Promise<boolean> {
+    const req: any = Param.MapRequest({
+      space: Config.API.maqola.space,
+      type: EnumRequestType.delete,
+      records: [Resource.PrepDelete(record)],
+    });
+    await httpClient.post(Config.API.resource.request.replace(':scope', 'managed'), req);
+    return true;
 
-  static async DeleteRecord(record: IDmartRecord): Promise<void> {
-    const req = this.getRequest(EnumRequestType.delete, record);
-    await httpClient.post(req.req, req.url);
-    return null;
   }
 }

@@ -10,15 +10,8 @@
   });
 
   setContext('PageResourceState', data.pageResource);
-
-  const addSomething = () => {
-    data.pageResource.update({
-      displayname: 'something else',
-    });
-  };
 </script>
 
-<!-- <button class="btn-rev" onclick={addSomething}>add something</button> -->
 {#if $resource}
   <div class="spaced">
     {$resource.displayname}

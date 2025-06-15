@@ -1,4 +1,4 @@
-import type { IUiError } from '$core/error.model';
+import { EnumErrorCode, type IUiError } from '$core/error.model';
 import { StateService } from '$core/state.abstract';
 import { Res } from '$utils/resources';
 import { mount } from 'svelte';
@@ -46,7 +46,7 @@ export class ToastService extends StateService<IToast> {
     const _options: IToast = { ...this.defaultOptions, ...options };
 
     // get message from code
-    const message = Res.Get(code, options?.text || Res.Get('Unknown'));
+    const message = Res.Select('ERRORS', EnumErrorCode[code], Res.Get(code, options?.text || Res.Get('Unknown')));
     setTimeout(() => {
       this.update({ ..._options, text: message, visible: true });
     }, 100);

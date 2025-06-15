@@ -3,6 +3,10 @@ import { EnumContentType, EnumResourceType } from '../utils/dmart/query.model';
 import type { IRecordWithAttachment } from '../utils/dmart/record.model';
 import { Translation, type ITranslation } from "../utils/translation.model";
 
+export enum EnumPathType {
+  folder = 'folder',
+  content = 'content'
+}
 export interface IResource {
   id?: string;
   shortname: string;
@@ -12,6 +16,7 @@ export interface IResource {
   tags?: string[];
   contentType?: EnumContentType;  // json, html...
   type?: EnumResourceType;
+  pathType?: EnumPathType;
 
   schema?: string;
   subpath?: string;
@@ -41,6 +46,10 @@ export class Resource {
 
     // return subpath is not a true representation of the path
     const _subpath = cleanPath(`/${resource.subpath}/${resource.shortname}`);
+
+    // everything is content except folder
+    const pathType = resource.resource_type === EnumResourceType.folder ? EnumPathType.folder : EnumPathType.content;
+
     return {
       contentType: resource.content_type || null,
       created: makeDate(resource.created_at),
@@ -51,13 +60,14 @@ export class Resource {
       id: resource.uuid,
       isActive: resource.is_active || false,
       isHidden: resource.hide_space || false,
-      path: `${resource.space_name || space}/${resource.resource_type}${_subpath}`,
+      path: `${resource.space_name || space}/${pathType}${_subpath}`,
       schema: resource.schema_shortname,
       shortname: resource.shortname,
       space: resource.space_name || space,
       subpath: _subpath,
       tags: resource.tags,
       type: resource.resource_type,
+      pathType: pathType,
       updated: makeDate(resource.updated_at),
       body: resource.body
     };
@@ -109,7 +119,7 @@ export class Resource {
 
   static PrepDelete(resource: Partial<IResource>): any {
     // remove last part of subpath
-    const _subpath = resource.subpath.replace(resource.shortname, '');
+    const _subpath = resource.subpath.split('/').slice(0, -1).join('/');
 
     return {
       resource_type: resource.type,

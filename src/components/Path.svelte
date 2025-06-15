@@ -7,7 +7,6 @@
   import { Toast } from '$src/lib/toast/toast.service';
   import type { IPath, PathState } from '$src/services/path.state';
   import type { IResource } from '$src/services/resource.model';
-  import { ResourceService } from '$src/services/resource.service';
   import type { PageResourceListState } from '$src/services/resource.state';
   import type { TreeState } from '$src/services/tree.state';
   import { EnumResourceType } from '$utils/dmart/query.model';
@@ -29,29 +28,15 @@
     Dialog.open(FolderDialog, {
       title: translate('Add new Folder', 'ADD_NEW_FOLDER'),
       css: 'modal-half-screen animate fromend',
-      // FIXME: do i need type?
-      data: { mode: { forNew: true }, type: EnumResourceType.folder },
+      data: { mode: { forNew: true }, path },
       onclose: async (resource: IResource) => {
         if (!resource) return;
+        // add to tree
+        treeState.AddFolder(resource, path.params.path);
+        // add to state
+        folderListState.add(resource);
 
-        // gather information about resource then add
-        try {
-          const _resource = await ResourceService.CreateResource({
-            ...resource,
-            subpath: path.params.path,
-            space: path.params.space,
-            type: EnumResourceType.folder,
-          });
-
-          // add to tree
-          treeState.AddFolder(_resource, path.params.path);
-          // add to state
-          folderListState.add(_resource);
-
-          Toast.ShowSuccess('DONE');
-        } catch (e) {
-          Toast.HandleUiError(e);
-        }
+        Toast.ShowSuccess('DONE');
       },
     });
   };
@@ -62,27 +47,12 @@
       title: translate('Add new content', 'ADD_NEW_CONTENT'),
       css: 'modal-half-screen animate fromend',
       // FIXME: do i need type?
-      data: { mode: { forNew: true }, type: EnumResourceType.content },
+      data: { mode: { forNew: true }, path },
       onclose: async (resource: IResource) => {
         if (!resource) return;
+        goto(routeLink(`/spaces/${resource.path}`));
 
-        try {
-          const _resource = await ResourceService.CreateResource({
-            ...resource,
-            subpath: path.params.path,
-            space: path.params.space,
-            type: EnumResourceType.content,
-          });
-
-          // add to tree
-          // TODO: id rather not goto a folder page, only a content page
-          // treeState.AddFolder(_resource, path.params.path);
-          goto(routeLink(`/spaces/${_resource.path}`));
-
-          Toast.ShowSuccess('DONE');
-        } catch (e) {
-          Toast.HandleUiError(e);
-        }
+        Toast.ShowSuccess('DONE');
       },
     });
   };

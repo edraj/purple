@@ -60,7 +60,6 @@ export class ResourceService {
       type: EnumRequestType.delete,
       records: [Resource.PrepDelete(resource)],
     });
-    ;
     await httpClient.post(Config.API.resource.request.replace(':scope', 'managed'), req);
     return true;
   }

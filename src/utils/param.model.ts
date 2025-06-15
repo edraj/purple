@@ -67,6 +67,12 @@ export class Param {
       forTypes = [options.resourceType];
     }
 
+    // if schema, change forTypes
+    if (options.subpath === Config.API.schemaFolder) {
+      forTypes = [EnumResourceType.schema];
+    }
+
+
     return {
       type: options.type || EnumQueryType.search,
       space_name: options.space || Config.API.rootSpace,

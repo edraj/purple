@@ -24,6 +24,7 @@ export interface IResource {
 
   space?: string;
   path?: string;
+  parent?: string;
 
   description?: string;
   displayname?: string;
@@ -49,6 +50,9 @@ export class Resource {
 
     // everything is content except folder
     const pathType = resource.resource_type === EnumResourceType.folder ? EnumPathType.folder : EnumPathType.content;
+
+    // parent path is either the space root or /folder /content
+    const _parentPath = `/${resource.space_name || space}/${pathType}${resource.subpath}`;
 
     return {
       contentType: resource.content_type || null,
@@ -128,4 +132,13 @@ export class Resource {
       attributes: {}
     };
   }
+
+  // static PrepTrash(something: any): any {
+  //   return {
+  //     resource_type: something.type,
+  //     shortname: resource.shortname,
+  //     subpath: _subpath || '/',
+  //     attributes: {}
+  //   }
+  // }
 }

@@ -80,7 +80,7 @@
         {#each $spaces as space}
           <li>
             <div class="card">
-              <a class="a" href={routeLink(`/spaces/${space.shortname}`)}>
+              <a class="a" href={routeLink(`/spaces/${space.shortname}/folder`)}>
                 <span class="weight-bold">{space.displayname}</span>
                 <div class="smaller light">
                   {space.shortname}

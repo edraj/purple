@@ -12,24 +12,24 @@
   },
   "type": "module",
   "dependencies": {
-    "@edraj/tsdmart": "^2.6.2",
-    "axios": "^1.9.0",
-    "bits-ui": "^2.4.1",
-    "rxjs": "^7.8.2"
+    "axios": "^1.10.0",
+    "bits-ui": "^2.8.0",
+    "rxjs": "^7.8.2",
+    "shut": "^7.0.6"
   },
   "devDependencies": {
-    "@internationalized/date": "^3.8.1",
+    "@internationalized/date": "^3.8.2",
     "@sveltejs/adapter-auto": "^6.0.1",
     "@sveltejs/adapter-static": "^3.0.8",
-    "@sveltejs/kit": "^2.21.2",
+    "@sveltejs/kit": "^2.21.5",
     "@sveltejs/package": "^2.3.11",
     "@sveltejs/vite-plugin-svelte": "^5.1.0",
-    "@types/node": "^22.15.29",
+    "@types/node": "^24.0.1",
     "autoprefixer": "^10.4.21",
     "globals": "^16.2.0",
     "just-clone": "^6.2.0",
-    "postcss": "^8.5.4",
-    "svelte": "^5.33.14",
+    "postcss": "^8.5.5",
+    "svelte": "^5.34.3",
     "svelte-check": "^4.2.1",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"

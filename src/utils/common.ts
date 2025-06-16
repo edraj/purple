@@ -28,6 +28,10 @@ export const cleanPath = (path: string) => {
   return path?.replace(/\/+/g, '/');
 };
 
+export const getParent = (path: string) => {
+  // pop the last part
+  return path.split('/').slice(0, -1).join('/');
+};
 export const generateShortName = (displayname: string) => {
   // replace all non-alphanumeric characters with underscore
 

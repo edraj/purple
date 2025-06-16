@@ -13,6 +13,7 @@
   setContext('PathState', data.pathState);
   setContext('TreeState', data.treeState);
   setContext('FolderListState', data.folderListState);
+  setContext('ResourceState', data.resourceState);
 
   data.pathState.SetState({ path: page.url.pathname });
 

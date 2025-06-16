@@ -22,7 +22,7 @@
   --sh-grey: #999999;
   --sh-grey-dark: #263238;
   --sh-black: #000;
-  --sh-linkcolor: #0c00b4;
+  --sh-linkcolor: #1504ff;
   --sh-visitedcolor: #800080;
   --sh-altcolor: #048bca;
   --sh-red: #f31109;
@@ -43,7 +43,7 @@
   --sh-modal-bg: rgba(0, 0, 0, 0.6);
   --sh-modal-index-10: calc(1040 - 10);
   --sh-btn-hover: rgba(243, 243, 243, 0.5);
-  --sh-btn-rev-hover: #0f00e7;
+  --sh-btn-rev-hover: #4537ff;
   --sh-btn-bg: #f3f3f3;
   --sh-btn-padding-h: 1.6rem;
   --sh-btn-padding-v: 1.2rem;
@@ -142,7 +142,8 @@ textarea {
 }
 .liga,
 .symbol:before,
-.symbolAfter:after {
+.symbolAfter:after,
+.expands .h:before {
   font-family: "dmart";
   text-transform: none;
   font-style: normal;
@@ -1906,6 +1907,45 @@ a[rel="track"]:hover {
 /* Print */
 /*******************/
 /* site defined vars */
+.expands .h {
+  color: var(--sh-text-color);
+  cursor: pointer;
+}
+.expands .h:hover {
+  color: var(--sh-linkcolor);
+}
+.expands .h:before {
+  content: "\e919";
+}
+.expands .guts {
+  display: none;
+}
+.expands.toggle .h:before {
+  content: "\e902";
+}
+.expands.toggle .guts {
+  display: block;
+}
+.poplist {
+  position: relative;
+}
+.poplist .h {
+  cursor: pointer;
+}
+.poplist .guts {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  background-color: #fff;
+  min-width: 200px;
+  border: 1px solid #f3f3f3;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  padding: var(--sh-halfspace);
+}
+.poplist.end .guts {
+  inset-inline-end: 0;
+  text-align: end;
+}
 .icon-pen:before {
   content: "\e903";
 }
@@ -2174,6 +2214,25 @@ a[rel="track"]:hover {
 }
 .modal-confirm .modal {
   max-width: clamp(300px, 50vw, 400px);
+}
+[data-dropdown-menu-content] {
+  z-index: 1000;
+  background-color: var(--sh-white);
+}
+[data-dropdown-menu-separator] {
+  margin-block: var(--sh-halfspace);
+  border-block-end: 1px solid var(--sh-grey-light);
+  line-height: 0;
+}
+[data-dropdown-menu-item] button {
+  width: 100%;
+  cursor: pointer;
+  color: var(--sh-linkcolor);
+  padding: var(--sh-btn-padding-v) var(--sh-btn-padding-h);
+  text-align: start;
+}
+[data-dropdown-menu-item] button:hover {
+  background-color: var(--sh-grey-light);
 }
 .image-fill {
   object-fit: cover;

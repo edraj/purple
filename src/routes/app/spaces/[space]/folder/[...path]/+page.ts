@@ -12,6 +12,17 @@ export const load = async ({ params, parent }) => {
   const { folderListState } = await parent();
   folderListState.SetList(resources);
 
+  // const resource = await ResourceService.GetResource({
+  //   space: params.space,
+  //   withPayload: true,
+  //   withAttachments: true,
+  //   subpath: params.path,
+  //   exactPath: true,
+  //   resourceType: EnumResourceType.folder
+  // });
+
+  // _attn(resource, 'this folder');
+
   return {
   };
 

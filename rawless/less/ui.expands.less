@@ -1,0 +1,48 @@
+.expands {
+  .h {
+    .cam();
+    .getIcon(@icon-arrow-down);
+  }
+
+  .guts {
+    display: none;
+
+  }
+
+  &.toggle {
+
+    .h {
+      .changeIcon(@icon-arrow-up)
+    }
+
+    .guts {
+      display: block;
+    }
+  }
+}
+
+.poplist {
+  position: relative;
+
+  .h {
+    cursor: pointer;
+  }
+
+  .guts {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    background-color: @white;
+    min-width: 200px;
+    border: 1px solid @grey-light;
+    box-shadow: @shadows[normal];
+    padding: var(--sh-halfspace);
+  }
+
+  &.end {
+    .guts {
+      inset-inline-end: 0;
+      text-align: end;
+    }
+  }
+}

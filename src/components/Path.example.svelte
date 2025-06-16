@@ -8,19 +8,18 @@
   import { expands } from '$src/lib/ui/expands';
   import type { IPath, PathState } from '$src/services/path.state';
   import type { IResource } from '$src/services/resource.model';
-  import { ResourceService } from '$src/services/resource.service';
-  import type { PageResourceListState, ResourceState } from '$src/services/resource.state';
+  import type { PageResourceListState } from '$src/services/resource.state';
   import type { TreeState } from '$src/services/tree.state';
   import { EnumResourceType } from '$utils/dmart/query.model';
   import { translate } from '$utils/resources';
   import { routeLink } from '$utils/route';
+  import { DropdownMenu } from 'bits-ui';
   import { getContext } from 'svelte';
 
   const treeState = getContext('TreeState') as TreeState;
   const pathState = getContext('PathState') as PathState;
-  const pathItem = pathState.stateItem$;
   const folderListState = getContext('FolderListState') as PageResourceListState;
-  const resourceState = getContext('ResourceState') as ResourceState;
+  const pathItem = pathState.stateItem$;
 
   $effect(() => {
     pathState.updatePath(page.url.pathname, page.params, page.route.id);
@@ -60,58 +59,55 @@
     });
   };
 
-  const handleDelete = (path: IPath) => {
-    // delete me
-    // the resource is that in current state? or is it not?
-    // note that it could be a connt resource or a folder info resource
-    const resource = resourceState?.currentItem;
-    if (!resource) return;
-    ResourceService.DeleteResource(resource)
-      .then((res) => {
-        if (res) {
-          // goto parent, go to, unles its /folder or content!!!!
-          // goto(routeLink(`/spaces/${resource.path}`));
-
-          Toast.ShowSuccess('DELETED');
-        }
-      })
-      .catch((error) => Toast.HandleUiError(error));
-  };
   const eft = () => {
     alert('eft');
   };
 </script>
 
 {#if $pathItem}
-  <div class="row-spaced bthin">
-    <div class="small">
-      <a href={routeLink(`/spaces/${$pathItem.params?.space}/folder`)}><strong>{$pathItem.params?.space}</strong></a>
+  <div class="row-spaced">
+    <div class="small spaced">
+      <a href={routeLink(`/spaces/${$pathItem.params?.space}`)}><strong>{$pathItem.params?.space}</strong></a>
       {$pathItem.params?.path}
     </div>
 
-    <div {@attach expands()} class="expands end smaller">
+    {#if $pathItem.type === EnumResourceType.folder}
+      <div class="bthin spaced">
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger>
+            <i class="liga">more</i>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content class="box box-white">
+            <DropdownMenu.Group>
+              <DropdownMenu.Item><button onclick={eft}>ACL</button></DropdownMenu.Item>
+              <DropdownMenu.Item><button>Edit Metadata</button></DropdownMenu.Item>
+              <DropdownMenu.Item><button>History</button></DropdownMenu.Item>
+              <DropdownMenu.Item><button>Delete</button></DropdownMenu.Item>
+            </DropdownMenu.Group>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Group>
+              <DropdownMenu.Item><button>Export</button></DropdownMenu.Item>
+              <DropdownMenu.Item><button>Import</button></DropdownMenu.Item>
+            </DropdownMenu.Group>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+        <button class="btn-fake" onclick={() => addFolder($pathItem)}>{translate('Add Folder', 'ADD_FOLDER')}</button>
+        <button class="btn-fake" onclick={() => addContent($pathItem)}
+          >{translate('Add Content', 'ADD_CONTENT')}</button>
+      </div>
+    {/if}
+  </div>
+
+  <div class="txt-r">
+    <div {@attach expands()} class="expands">
       <div class="f5 h"><i class="liga">more</i></div>
       <ul class="alist guts">
-        <li><button onclick={eft}>{translate('ACL', 'ACL')} </button></li>
-        <li><button onclick={eft}>{translate('Edit metadata', 'EDIT')} </button></li>
-        <li><button onclick={eft}>{translate('History', 'HISTORY')} </button></li>
-        <li>
-          <button class="red" onclick={() => handleDelete($pathItem)}
-            >{translate('Delete', 'DELETE')} <i class="liga">delete</i></button>
-        </li>
-        {#if $pathItem.type === EnumResourceType.folder}
-          <li><button onclick={eft}>{translate('Export', 'EXPORT')} </button></li>
-          <li><button onclick={eft}>{translate('Import', 'IMPORT')} </button></li>
-
-          <li>
-            <button onclick={() => addFolder($pathItem)}>
-              {translate('Add Folder', 'ADD_FOLDER')} <i class="liga">folder</i></button>
-          </li>
-          <li>
-            <button onclick={() => addContent($pathItem)}
-              >{translate('Add Content', 'ADD_CONTENT')} <i class="liga">template</i></button>
-          </li>
-        {/if}
+        <li><button onclick={eft}>ACL</button></li>
+        <li><button onclick={eft}>Edit Metadata</button></li>
+        <li><button onclick={eft}>History</button></li>
+        <li><button onclick={eft}>Delete</button></li>
+        <li><button onclick={eft}>Export</button></li>
+        <li><button onclick={eft}>Import</button></li>
       </ul>
     </div>
   </div>

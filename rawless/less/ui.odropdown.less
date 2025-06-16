@@ -1,0 +1,24 @@
+[data-dropdown-menu-content] {
+  z-index: 1000;
+  background-color: var(--sh-white);
+}
+
+[data-dropdown-menu-separator] {
+  margin-block: var(--sh-halfspace);
+  border-block-end: 1px solid var(--sh-grey-light);
+  line-height: 0;
+}
+
+[data-dropdown-menu-item] {
+  button {
+    width: 100%;
+    cursor: pointer;
+    color: var(--sh-linkcolor);
+    padding: var(--sh-btn-padding-v) var(--sh-btn-padding-h);
+    text-align: start;
+
+    &:hover {
+      background-color: var(--sh-grey-light);
+    }
+  }
+}

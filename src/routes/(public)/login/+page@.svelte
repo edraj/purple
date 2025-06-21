@@ -24,11 +24,11 @@
     }
 
     AuthService.Login(username, password)
-      .catch((e) => {
-        Toast.HandleUiError(e);
-      })
       .then((_) => {
         goto(routeLink(AuthState.redirectUrl, true) || routeLink(Config.Basic.defaultRoute));
+      })
+      .catch((e) => {
+        Toast.HandleUiError(e);
       });
   }
 </script>

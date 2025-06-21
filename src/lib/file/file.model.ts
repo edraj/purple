@@ -1,5 +1,9 @@
-import { EnumContentType, EnumResourceType } from '../../utils/dmart/query.model';
-import type { IAttributes, IPayload, IRecord } from '../../utils/dmart/record.model';
+import { browser, dev } from '$app/environment';
+import { mapRecord } from '$core/response.model';
+import { Config } from '$src/config';
+import { type IResource, Resource } from '$src/services/resource.model';
+import { cleanPath } from '$utils/common';
+import { EnumContentType, EnumResourceType } from '$utils/dmart/query.model';
 
 export interface IFileRequest {
   space?: string,
@@ -11,10 +15,48 @@ export interface IFileRequest {
   file?: File;
   files?: FileList;
 }
-
+export interface IDmartFile extends IResource {
+  url?: string;
+  ext?: string;
+}
 
 
 export class DmartFile {
+
+  static GetFileUrl(file: IDmartFile, ext?: string): string {
+
+    let scope = 'managed';
+    if (dev && browser) {
+      scope = 'public';
+    }
+
+    return Config.API.apiRoot + cleanPath(Config.API.payload.url
+      .replace(':scope', scope)
+      .replace(':resource', file.type)
+      .replace(':space', file.space)
+      .replace(':subpath', file.subpath)
+      .replace(':shortname', file.shortname)
+      .replace(':ext', file.ext || ext));
+  }
+
+  static NewInstance(data: any, parentpath?: string, space?: string): IDmartFile {
+    const res = Resource.NewInstance(data, space);
+    if (parentpath) res.subpath = parentpath;
+
+    // TODO: lookup extension
+    const ext = data.body?.split('.').pop() || '.png';
+    return {
+      ...res,
+      ext,
+      url: DmartFile.GetFileUrl(res, ext)
+    };
+  }
+
+  static NewInstances(data: any[], parentpath?: string, space?: string): IDmartFile[] {
+    if (!data?.length) return [];
+    return data.map(n => DmartFile.NewInstance(mapRecord(n), parentpath, space));
+  }
+
   static MapType(file: File): EnumContentType {
     const type = file.type;
 
@@ -25,13 +67,13 @@ export class DmartFile {
 
   static PrepPost(fileRequest: IFileRequest, file: File): any {
 
-    const payload: IPayload = {
+    const payload = {
       body: {},
       content_type: DmartFile.MapType(file),
       schema_shortname: fileRequest.schema || null,
     };
 
-    const _record: IRecord<IAttributes> = {
+    const _record = {
       resource_type: fileRequest.resourceType,
       shortname: fileRequest.shortname,
       subpath: fileRequest.subpath,

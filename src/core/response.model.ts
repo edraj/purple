@@ -1,4 +1,4 @@
-const mapRecord = (record: any) => {
+export const mapRecord = (record: any) => {
   if (!record) return null;
   let body = record.attributes?.payload?.body;
   // if its text, dont expand
@@ -8,6 +8,7 @@ const mapRecord = (record: any) => {
     ...record,
     ...record.attributes,
     ...record.attributes?.payload,
+    ...record.attachments,
     ...body,
   };
 };

@@ -1,3 +1,4 @@
+import { DmartFile, type IDmartFile } from '$src/lib/file/file.model';
 import { cleanPath, makeDate } from '../utils/common';
 import { EnumContentType, EnumResourceType } from '../utils/dmart/query.model';
 import type { IRecordWithAttachment } from '../utils/dmart/record.model';
@@ -34,6 +35,7 @@ export interface IResource {
   isHidden?: boolean;
 
   body?: any; // for content
+  media?: IDmartFile[];
 }
 
 
@@ -44,6 +46,8 @@ export class Resource {
   static NewInstance(resource: any, space?: string): IResource {
 
     if (!resource) return null;
+    // WATCH: in one case the space name is missing, pass it
+    const _space = resource.space_name || space;
 
     // return subpath is not a true representation of the path
     const _subpath = cleanPath(`/${resource.subpath}/${resource.shortname}`);
@@ -51,8 +55,9 @@ export class Resource {
     // everything is content except folder
     const pathType = resource.resource_type === EnumResourceType.folder ? EnumPathType.folder : EnumPathType.content;
 
-    // parent path is either the space root or /folder /content
-    const _parentPath = `/${resource.space_name || space}/${pathType}${resource.subpath}`;
+    // parent path is always a folder
+    const _parentPath = cleanPath(`/${_space}/folder/${resource.subpath}`);
+
 
     return {
       contentType: resource.content_type || null,
@@ -64,16 +69,18 @@ export class Resource {
       id: resource.uuid,
       isActive: resource.is_active || false,
       isHidden: resource.hide_space || false,
-      path: `${resource.space_name || space}/${pathType}${_subpath}`,
+      path: `${_space}/${pathType}${_subpath}`,
+      parent: _parentPath,
       schema: resource.schema_shortname,
       shortname: resource.shortname,
-      space: resource.space_name || space,
+      space: _space,
       subpath: _subpath,
       tags: resource.tags,
       type: resource.resource_type,
       pathType: pathType,
       updated: makeDate(resource.updated_at),
-      body: resource.body
+      body: resource.body,
+      media: resource.media ? DmartFile.NewInstances(resource.media, _subpath, _space) : null,
     };
   }
   static NewInstances(resources: any[]): IResource[] {

@@ -1,7 +1,7 @@
 import { Config } from '../../config';
 import httpClient from '../../core/http.service';
 import { EnumResourceType, type typeScope } from '../../utils/dmart/query.model';
-import { DmartFile, type IFileRequest } from "./file.model";
+import { DmartFile } from "./file.model";
 
 export class DmartFileService {
 
@@ -41,21 +41,9 @@ export class DmartFileService {
     await Promise.all(promises);
   }
 
-  static GetFileUrl(fileRequest: IFileRequest, scope: typeScope = 'managed'): string {
-    const _schema = fileRequest.schema ? `${fileRequest.schema}.` : '';
-    return Config.API.payload.url
-      .replace(':scope', scope)
-      .replace(':resource', fileRequest.resourceType)
-      .replace(':space', fileRequest.space)
-      .replace(':subpath', fileRequest.subpath)
-      .replace(':shortname', fileRequest.shortname)
-      .replace(':schema', _schema)
-      .replace(':ext', fileRequest.ext || '');
-
-  }
 
   static async GetFile(fileRequest: any, scope: typeScope = 'managed'): Promise<any> {
-    const res = await httpClient.get<any>(DmartFileService.GetFileUrl(fileRequest, scope));
+    const res = await httpClient.get<any>(DmartFile.GetFileUrl(fileRequest, scope));
     // map response
     return res;
   }

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
+  import ConfirmDialog from '$src/components/Confirm.dialog.svelte';
   import ContentDialog from '$src/components/Content.dialog.svelte';
   import FolderDialog from '$src/components/Folder.dialog.svelte';
   import { Dialog } from '$src/lib/dialog/service.svelte';
@@ -66,16 +67,36 @@
     // note that it could be a connt resource or a folder info resource
     const resource = resourceState?.currentItem;
     if (!resource) return;
-    ResourceService.DeleteResource(resource)
-      .then((res) => {
-        if (res) {
-          // goto parent, go to, unles its /folder or content!!!!
-          // goto(routeLink(`/spaces/${resource.path}`));
 
-          Toast.ShowSuccess('DELETED');
+    Dialog.open(ConfirmDialog, {
+      title: translate('Delete this resource', 'DELETE_RESOURCE'),
+      css: 'modal-confirm',
+      data: {
+        message: `
+        <h3>${resource.displayname}</h3>
+          ${translate(
+            `Are you sure you want to delete this resource and all its sub resources?
+          This action cannot be undone.`,
+            'ARE_YOU_SURE_DELETE_RESOURCE',
+          )}`,
+      },
+      onclose: (confirmed) => {
+        if (confirmed) {
+          ResourceService.DeleteResource(resource)
+            .then((res) => {
+              if (res) {
+                // goto parent, go to, unles its /folder or content!!!!
+                Toast.ShowSuccess('DELETED');
+                // empty resource before u move
+                resourceState.remove();
+
+                goto(routeLink(`/spaces${resource.parent}`));
+              }
+            })
+            .catch((error) => Toast.HandleUiError(error));
         }
-      })
-      .catch((error) => Toast.HandleUiError(error));
+      },
+    });
   };
   const eft = () => {
     alert('eft');
